@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.ia.ia_base.controllers.MainController">
+    
+    <top>
+        <MenuBar fx:id="menuBar">
+            <menus>
+                <Menu text="Failas" fx:id="fileMenu">
+                    <items>
+                        <MenuItem text="Uždaryti" fx:id="exitMenuItem" mnemonicParsing="false"/>
+                    </items>
+                </Menu>
+                <Menu text="Langai" fx:id="viewMenu">
+                    <items>
+                        <MenuItem text="Pavyzdinis langas" fx:id="exampleViewMenuItem" mnemonicParsing="false"/>
+                    </items>
+                </Menu>
+                <Menu text="Pagalba" fx:id="helpMenu">
+                    <items>
+                        <MenuItem text="Apie" fx:id="aboutMenuItem" mnemonicParsing="false"/>
+                    </items>
+                </Menu>
+            </menus>
+        </MenuBar>
+    </top>
+    
+    <center>
+        <VBox alignment="CENTER" spacing="20">
+            <padding>
+                <Insets top="20" right="20" bottom="20" left="20"/>
+            </padding>
+            
+            <Label text="Sveiki atvykę į IA Base Application!" style="-fx-font-size: 24px;"/>
+            <Label text="Naudokite meniu, kad atidarytumėte naujus langus." style="-fx-font-size: 14px;"/>
+            
+            <Button text="Atidaryti pavyzdinį langą" 
+                    onAction="#openExampleView" 
+                    style="-fx-font-size: 14px; -fx-padding: 10 20 10 20;"/>
+        </VBox>
+    </center>
+    
+</BorderPane>
+

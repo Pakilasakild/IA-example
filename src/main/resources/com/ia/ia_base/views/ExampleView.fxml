@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.ia.ia_base.controllers.ExampleController">
+    
+    <top>
+        <MenuBar>
+            <menus>
+                <Menu text="Failas">
+                    <items>
+                        <MenuItem text="Atidaryti CSV failą" onAction="#loadCSVFile"/>
+                        <SeparatorMenuItem/>
+                        <MenuItem text="Grįžti" onAction="#goBack"/>
+                        <MenuItem text="Uždaryti" onAction="#closeApplication"/>
+                    </items>
+                </Menu>
+            </menus>
+        </MenuBar>
+    </top>
+    
+    <center>
+        <VBox spacing="10">
+            <padding>
+                <Insets top="10" right="10" bottom="10" left="10"/>
+            </padding>
+            
+            <Label fx:id="messageLabel" style="-fx-font-size: 18px;"/>
+            <Button text="Pasirinkti CSV failą" onAction="#loadCSVFile" 
+                    style="-fx-font-size: 14px; -fx-padding: 10 20 10 20;"/>
+            
+            <TableView fx:id="tableView" VBox.vgrow="ALWAYS">
+                <columns>
+                    <!-- Stulpeliai bus sukurti dinamiškai -->
+                </columns>
+            </TableView>
+        </VBox>
+    </center>
+    
+    <bottom>
+        <BorderPane style="-fx-background-color: #f0f0f0; -fx-padding: 5;">
+            <left>
+                <Label fx:id="statusLabel" text="Parengta" style="-fx-padding: 5 10 5 10;"/>
+            </left>
+            <right>
+                <Label fx:id="dateTimeLabel" style="-fx-padding: 5 10 5 10;"/>
+            </right>
+        </BorderPane>
+    </bottom>
+    
+</BorderPane>
