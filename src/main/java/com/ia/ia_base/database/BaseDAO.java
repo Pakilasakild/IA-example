@@ -10,8 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Bazinė DAO (Data Access Object) klasė.
- * Teikia pagrindinius metodus darbui su duomenų baze.
+ * Base DAO (Data Access Object) class.
+ * Provides basic methods for working with database.
  */
 public abstract class BaseDAO<T> {
     protected DatabaseConnection dbConnection;
@@ -21,16 +21,16 @@ public abstract class BaseDAO<T> {
     }
     
     /**
-     * Patikrina ar duomenų bazė naudojama
+     * Checks if database is used
      */
     protected void checkDatabaseEnabled() throws SQLException {
         if (!AppConfig.isUseDatabase()) {
-            throw new SQLException("Duomenų bazė nenaudojama. Įjunkite ją AppConfig.setUseDatabase(true)");
+            throw new SQLException("Database not used. Enable it with AppConfig.setUseDatabase(true)");
         }
     }
     
     /**
-     * Vykdo SELECT užklausą ir grąžina rezultatus
+     * Executes SELECT query and returns results
      */
     protected List<T> executeQuery(String sql, Object... params) throws SQLException {
         checkDatabaseEnabled();
@@ -51,7 +51,7 @@ public abstract class BaseDAO<T> {
     }
     
     /**
-     * Vykdo INSERT, UPDATE, DELETE užklausas
+     * Executes INSERT, UPDATE, DELETE queries
      */
     protected int executeUpdate(String sql, Object... params) throws SQLException {
         checkDatabaseEnabled();
@@ -65,7 +65,7 @@ public abstract class BaseDAO<T> {
     }
     
     /**
-     * Nustato parametrus PreparedStatement objektui
+     * Sets parameters for PreparedStatement object
      */
     private void setParameters(PreparedStatement stmt, Object... params) throws SQLException {
         for (int i = 0; i < params.length; i++) {
@@ -74,8 +74,8 @@ public abstract class BaseDAO<T> {
     }
     
     /**
-     * Konvertuoja ResultSet į Entity objektą
-     * Turi būti implementuotas kiekvienoje vaikinėje klasėje
+     * Converts ResultSet to Entity object
+     * Must be implemented in each child class
      */
     protected abstract T mapResultSetToEntity(ResultSet rs) throws SQLException;
 }

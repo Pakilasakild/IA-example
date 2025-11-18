@@ -1,17 +1,17 @@
 package com.ia.ia_base.database.models.example;
 
 /**
- * Kliento klasė - KOMPOZICIJOS pavyzdys
- * Turi AddressEntity objektą kaip savo dalį (kompozicija)
+ * Customer class - COMPOSITION example
+ * Has AddressEntity object as its part (composition)
  */
 public class CustomerEntityExample {
     private int id;
     private String name;
     private String email;
-    private AddressEntity address; // KOMPOZICIJA - Customer turi Address
+    private AddressEntity address; // COMPOSITION - Customer has Address
     
     public CustomerEntityExample() {
-        this.address = new AddressEntity(); // Sukuriame tuščią adresą
+        this.address = new AddressEntity(); // Create empty address
     }
     
     public CustomerEntityExample(String name, String email, AddressEntity address) {
@@ -20,7 +20,7 @@ public class CustomerEntityExample {
         this.address = address;
     }
     
-    // Getters ir Setters
+    // Getters and Setters
     public int getId() {
         return id;
     }
@@ -45,7 +45,7 @@ public class CustomerEntityExample {
         this.email = email;
     }
     
-    // Kompozicijos getter ir setter
+    // Composition getter and setter
     public AddressEntity getAddress() {
         return address;
     }

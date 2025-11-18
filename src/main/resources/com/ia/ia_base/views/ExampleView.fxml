@@ -11,12 +11,12 @@
     <top>
         <MenuBar>
             <menus>
-                <Menu text="Failas">
+                <Menu text="File">
                     <items>
-                        <MenuItem text="Atidaryti CSV failą" onAction="#loadCSVFile"/>
+                        <MenuItem text="Open CSV File" onAction="#loadCSVFile"/>
                         <SeparatorMenuItem/>
-                        <MenuItem text="Grįžti" onAction="#goBack"/>
-                        <MenuItem text="Uždaryti" onAction="#closeApplication"/>
+                        <MenuItem text="Back" onAction="#goBack"/>
+                        <MenuItem text="Close" onAction="#closeApplication"/>
                     </items>
                 </Menu>
             </menus>
@@ -30,12 +30,12 @@
             </padding>
             
             <Label fx:id="messageLabel" style="-fx-font-size: 18px;"/>
-            <Button text="Pasirinkti CSV failą" onAction="#loadCSVFile" 
+            <Button text="Select CSV File" onAction="#loadCSVFile" 
                     style="-fx-font-size: 14px; -fx-padding: 10 20 10 20;"/>
             
             <TableView fx:id="tableView" VBox.vgrow="ALWAYS">
                 <columns>
-                    <!-- Stulpeliai bus sukurti dinamiškai -->
+                    <!-- Columns will be created dynamically -->
                 </columns>
             </TableView>
         </VBox>
@@ -44,7 +44,7 @@
     <bottom>
         <BorderPane style="-fx-background-color: #f0f0f0; -fx-padding: 5;">
             <left>
-                <Label fx:id="statusLabel" text="Parengta" style="-fx-padding: 5 10 5 10;"/>
+                <Label fx:id="statusLabel" text="Ready" style="-fx-padding: 5 10 5 10;"/>
             </left>
             <right>
                 <Label fx:id="dateTimeLabel" style="-fx-padding: 5 10 5 10;"/>

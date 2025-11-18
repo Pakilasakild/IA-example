@@ -1,14 +1,14 @@
-# Modelių kūrimas, paveldėjimas ir kompozicija
+# Model Creation, Inheritance and Composition
 
-Šiame dokumente paaiškinama, kaip kurti modelius (Entity klasės), naudoti paveldėjimą (inheritance) ir kompoziciją (composition) IB HL Computer Science IA projektuose.
+This document explains how to create models (Entity classes), use inheritance and composition in IB HL Computer Science IA projects.
 
-## 1. Modelių (Entity) kūrimas
+## 1. Model (Entity) Creation
 
-Modelis (Entity) yra klasė, kuri atspindi duomenų bazės lentelės struktūrą. Kiekviena lentelė turi savo Entity klasę.
+A Model (Entity) is a class that reflects the database table structure. Each table has its own Entity class.
 
-### Paprasčiausias pavyzdys
+### Simplest Example
 
-Tarkime, turime lentelę `students`:
+Suppose we have a `students` table:
 ```sql
 CREATE TABLE students (
     id INT PRIMARY KEY AUTO_INCREMENT,
@@ -23,19 +23,19 @@ CREATE TABLE students (
 package com.ia.ia_base.database.models;
 
 /**
- * Studento modelis (Entity klasė)
- * Atspindi 'students' lentelės struktūrą
+ * Student model (Entity class)
+ * Reflects 'students' table structure
  */
 public class StudentEntity {
-    // Privatūs laukai - atitinka lentelės stulpelius
+    // Private fields - correspond to table columns
     private int id;
     private String name;
     private String email;
     private int age;
     
-    // Konstruktoriai
+    // Constructors
     public StudentEntity() {
-        // Tuščias konstruktorius - reikalingas DAO
+        // Empty constructor - required for DAO
     }
     
     public StudentEntity(String name, String email, int age) {
@@ -44,7 +44,7 @@ public class StudentEntity {
         this.age = age;
     }
     
-    // Getters ir Setters (reikalingi visiems laukams)
+    // Getters and Setters (required for all fields)
     public int getId() {
         return id;
     }
@@ -77,7 +77,7 @@ public class StudentEntity {
         this.age = age;
     }
     
-    // toString() metodas - naudingas debuginimui
+    // toString() method - useful for debugging
     @Override
     public String toString() {
         return "StudentEntity{" +
@@ -90,7 +90,7 @@ public class StudentEntity {
 }
 ```
 
-### StudentDAO.java (darbui su duomenų baze)
+### StudentDAO.java (for working with database)
 
 ```java
 package com.ia.ia_base.database;
@@ -130,19 +130,19 @@ public class StudentDAO extends BaseDAO<StudentEntity> {
 
 ---
 
-## 2. Paveldėjimas (Inheritance)
+## 2. Inheritance
 
-Paveldėjimas naudojamas, kai turime susijusias klases, kurios turi bendrų savybių.
+Inheritance is used when we have related classes that share common properties.
 
-### Pavyzdys: Žmonės sistema
+### Example: People System
 
-**BaseEntity.java** (bazinė klasė):
+**BaseEntity.java** (base class):
 ```java
 package com.ia.ia_base.database.models;
 
 /**
- * Bazinė klasė visoms žmonių klasėms
- * Turi bendras savybes, kurias paveldi kitos klasės
+ * Base class for all person classes
+ * Has common properties that other classes inherit
  */
 public abstract class BasePersonEntity {
     protected int id;
@@ -150,7 +150,7 @@ public abstract class BasePersonEntity {
     protected String email;
     protected String phone;
     
-    // Konstruktoriai
+    // Constructors
     public BasePersonEntity() {}
     
     public BasePersonEntity(String name, String email, String phone) {
@@ -159,7 +159,7 @@ public abstract class BasePersonEntity {
         this.phone = phone;
     }
     
-    // Getters ir Setters
+    // Getters and Setters
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
     
@@ -174,13 +174,13 @@ public abstract class BasePersonEntity {
 }
 ```
 
-**StudentEntity.java** (paveldi BasePersonEntity):
+**StudentEntity.java** (extends BasePersonEntity):
 ```java
 package com.ia.ia_base.database.models;
 
 /**
- * Studento klasė - paveldi BasePersonEntity
- * Turi papildomas studento specifines savybes
+ * Student class - extends BasePersonEntity
+ * Has additional student-specific properties
  */
 public class StudentEntity extends BasePersonEntity {
     private String studentNumber;
@@ -188,18 +188,18 @@ public class StudentEntity extends BasePersonEntity {
     private double gpa;
     
     public StudentEntity() {
-        super(); // Iškviečia tėvinės klasės konstruktorių
+        super(); // Calls parent class constructor
     }
     
     public StudentEntity(String name, String email, String phone, 
                          String studentNumber, int year, double gpa) {
-        super(name, email, phone); // Iškviečia tėvinės klasės konstruktorių
+        super(name, email, phone); // Calls parent class constructor
         this.studentNumber = studentNumber;
         this.year = year;
         this.gpa = gpa;
     }
     
-    // Tik StudentEntity specifiniai getters ir setters
+    // Only StudentEntity specific getters and setters
     public String getStudentNumber() { return studentNumber; }
     public void setStudentNumber(String studentNumber) { this.studentNumber = studentNumber; }
     
@@ -223,13 +223,13 @@ public class StudentEntity extends BasePersonEntity {
 }
 ```
 
-**TeacherEntity.java** (taip pat paveldi BasePersonEntity):
+**TeacherEntity.java** (also extends BasePersonEntity):
 ```java
 package com.ia.ia_base.database.models;
 
 /**
- * Mokytojo klasė - paveldi BasePersonEntity
- * Turi mokytojo specifines savybes
+ * Teacher class - extends BasePersonEntity
+ * Has teacher-specific properties
  */
 public class TeacherEntity extends BasePersonEntity {
     private String employeeId;
@@ -248,7 +248,7 @@ public class TeacherEntity extends BasePersonEntity {
         this.salary = salary;
     }
     
-    // Tik TeacherEntity specifiniai getters ir setters
+    // Only TeacherEntity specific getters and setters
     public String getEmployeeId() { return employeeId; }
     public void setEmployeeId(String employeeId) { this.employeeId = employeeId; }
     
@@ -260,9 +260,9 @@ public class TeacherEntity extends BasePersonEntity {
 }
 ```
 
-### Duomenų bazės struktūra su paveldėjimu
+### Database Structure with Inheritance
 
-**students lentelė:**
+**students table:**
 ```sql
 CREATE TABLE students (
     id INT PRIMARY KEY AUTO_INCREMENT,
@@ -275,7 +275,7 @@ CREATE TABLE students (
 );
 ```
 
-**teachers lentelė:**
+**teachers table:**
 ```sql
 CREATE TABLE teachers (
     id INT PRIMARY KEY AUTO_INCREMENT,
@@ -290,18 +290,18 @@ CREATE TABLE teachers (
 
 ---
 
-## 3. Kompozicija (Composition)
+## 3. Composition
 
-Kompozicija naudojama, kai viena klasė turi kitos klasės objektą kaip savo dalį.
+Composition is used when one class has another class's object as its part.
 
-### Pavyzdys: Užsakymų sistema
+### Example: Order System
 
-**AddressEntity.java** (kompozicijos dalis):
+**AddressEntity.java** (composition part):
 ```java
 package com.ia.ia_base.database.models;
 
 /**
- * Adreso klasė - naudojama kompozicijoje
+ * Address class - used in composition
  */
 public class AddressEntity {
     private String street;
@@ -318,7 +318,7 @@ public class AddressEntity {
         this.country = country;
     }
     
-    // Getters ir Setters
+    // Getters and Setters
     public String getStreet() { return street; }
     public void setStreet(String street) { this.street = street; }
     
@@ -338,21 +338,21 @@ public class AddressEntity {
 }
 ```
 
-**CustomerEntity.java** (turi AddressEntity kaip kompoziciją):
+**CustomerEntity.java** (has AddressEntity as composition):
 ```java
 package com.ia.ia_base.database.models;
 
 /**
- * Kliento klasė - naudoja kompoziciją su AddressEntity
+ * Customer class - uses composition with AddressEntity
  */
 public class CustomerEntity {
     private int id;
     private String name;
     private String email;
-    private AddressEntity address; // Kompozicija - Customer turi Address
+    private AddressEntity address; // Composition - Customer has Address
     
     public CustomerEntity() {
-        this.address = new AddressEntity(); // Sukuriame tuščią adresą
+        this.address = new AddressEntity(); // Create empty address
     }
     
     public CustomerEntity(String name, String email, AddressEntity address) {
@@ -361,7 +361,7 @@ public class CustomerEntity {
         this.address = address;
     }
     
-    // Getters ir Setters
+    // Getters and Setters
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
     
@@ -371,7 +371,7 @@ public class CustomerEntity {
     public String getEmail() { return email; }
     public void setEmail(String email) { this.email = email; }
     
-    // Kompozicijos getter ir setter
+    // Composition getter and setter
     public AddressEntity getAddress() { return address; }
     public void setAddress(AddressEntity address) { this.address = address; }
     
@@ -387,9 +387,9 @@ public class CustomerEntity {
 }
 ```
 
-### Duomenų bazės struktūra su kompozicija
+### Database Structure with Composition
 
-**customers lentelė:**
+**customers table:**
 ```sql
 CREATE TABLE customers (
     id INT PRIMARY KEY AUTO_INCREMENT,
@@ -402,7 +402,7 @@ CREATE TABLE customers (
 );
 ```
 
-**CustomerDAO.java** (su kompozicija):
+**CustomerDAO.java** (with composition):
 ```java
 package com.ia.ia_base.database;
 
@@ -439,7 +439,7 @@ public class CustomerDAO extends BaseDAO<CustomerEntity> {
         customer.setName(rs.getString("name"));
         customer.setEmail(rs.getString("email"));
         
-        // Sukuriame AddressEntity objektą iš duomenų bazės
+        // Create AddressEntity object from database
         AddressEntity address = new AddressEntity();
         address.setStreet(rs.getString("street"));
         address.setCity(rs.getString("city"));
@@ -454,9 +454,9 @@ public class CustomerDAO extends BaseDAO<CustomerEntity> {
 
 ---
 
-## 4. Sudėtingesnis pavyzdys: Paveldėjimas + Kompozicija
+## 4. More Complex Example: Inheritance + Composition
 
-**ProductEntity.java** (bazinė klasė):
+**ProductEntity.java** (base class):
 ```java
 package com.ia.ia_base.database.models;
 
@@ -466,20 +466,20 @@ public abstract class ProductEntity {
     protected double price;
     protected String description;
     
-    // Getters, setters, konstruktoriai...
+    // Getters, setters, constructors...
 }
 ```
 
-**BookEntity.java** (paveldi ProductEntity + turi kompoziciją):
+**BookEntity.java** (extends ProductEntity + has composition):
 ```java
 package com.ia.ia_base.database.models;
 
 public class BookEntity extends ProductEntity {
     private String isbn;
     private String author;
-    private PublisherEntity publisher; // Kompozicija
+    private PublisherEntity publisher; // Composition
     
-    // Konstruktoriai, getters, setters...
+    // Constructors, getters, setters...
 }
 ```
 
@@ -496,7 +496,7 @@ public class PublisherEntity {
 
 ---
 
-## 5. Naudojimas controlleryje
+## 5. Usage in Controller
 
 ```java
 package com.ia.ia_base.controllers;
@@ -516,7 +516,7 @@ public class StudentController extends BaseController {
     private void loadStudents() {
         try {
             List<StudentEntity> students = studentDAO.findAll();
-            // Užkrauname į TableView
+            // Load into TableView
             tableView.getItems().clear();
             tableView.getItems().addAll(students);
         } catch (SQLException e) {
@@ -528,18 +528,18 @@ public class StudentController extends BaseController {
 
 ---
 
-## Pagrindinės taisyklės
+## Main Rules
 
-1. **Modelis = Lentelė**: Kiekviena lentelė turi savo Entity klasę
-2. **Paveldėjimas**: Naudokite, kai klasės turi bendrų savybių
-3. **Kompozicija**: Naudokite, kai viena klasė turi kitos klasės objektą
-4. **Getters/Setters**: Visada sukurkite visiems laukams
-5. **toString()**: Naudingas debuginimui
-6. **DAO klasė**: Kiekvienam Entity turi būti atitinkama DAO klasė
+1. **Model = Table**: Each table has its own Entity class
+2. **Inheritance**: Use when classes have common properties
+3. **Composition**: Use when one class has another class's object
+4. **Getters/Setters**: Always create for all fields
+5. **toString()**: Useful for debugging
+6. **DAO class**: Each Entity must have corresponding DAO class
 
-## Kada naudoti ką?
+## When to Use What?
 
-- **Paveldėjimas**: Kai turite "yra" santykį (Student IS A Person)
-- **Kompozicija**: Kai turite "turi" santykį (Customer HAS AN Address)
-- **Paprastas modelis**: Kai nereikia nei paveldėjimo, nei kompozicijos
+- **Inheritance**: When you have "is a" relationship (Student IS A Person)
+- **Composition**: When you have "has a" relationship (Customer HAS AN Address)
+- **Simple model**: When neither inheritance nor composition is needed
 

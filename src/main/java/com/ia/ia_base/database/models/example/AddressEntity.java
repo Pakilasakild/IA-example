@@ -1,8 +1,8 @@
 package com.ia.ia_base.database.models.example;
 
 /**
- * Adreso klasė - KOMPOZICIJOS pavyzdys
- * Naudojama kaip dalis kitų klasių (pvz., CustomerEntity)
+ * Address class - COMPOSITION example
+ * Used as part of other classes (e.g., CustomerEntity)
  */
 public class AddressEntity {
     private String street;
@@ -20,7 +20,7 @@ public class AddressEntity {
         this.country = country;
     }
     
-    // Getters ir Setters
+    // Getters and Setters
     public String getStreet() {
         return street;
     }

@@ -10,41 +10,41 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 /**
- * Bazinė Controller klasė.
- * Visi kiti controlleriai gali paveldėti šią klasę.
+ * Base Controller class.
+ * All other controllers can extend this class.
  */
 public abstract class BaseController implements Initializable {
     protected Stage stage;
     
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        // Bazinė inicializacija - gali būti perrašyta vaikinėse klasėse
+        // Base initialization - can be overridden in child classes
     }
     
     /**
-     * Nustato Stage objektą (naudojama iš Application klasės)
+     * Sets Stage object (used from Application class)
      */
     public void setStage(Stage stage) {
         this.stage = stage;
     }
     
     /**
-     * Atidaro naują langą
+     * Opens new window
      */
     protected void openNewWindow(String fxmlPath, String title) {
         WindowManager.openWindow(fxmlPath, title);
     }
     
     /**
-     * Atidaro modalinį langą
+     * Opens modal window
      */
     protected void openModalWindow(String fxmlPath, String title) {
         WindowManager.openWindow(fxmlPath, title, true);
     }
     
     /**
-     * Pakeičia esamo lango turinį (sceną)
-     * Naudinga kai norite pakeisti langą vietoj atidarymo naujo
+     * Changes current window content (scene)
+     * Useful when you want to change window instead of opening new one
      */
     protected void changeScene(String fxmlPath) {
         if (stage == null) {
@@ -57,7 +57,7 @@ public abstract class BaseController implements Initializable {
             );
             Parent root = loader.load();
             
-            // Nustatome Stage objektą naujame controlleryje
+            // Set Stage object in new controller
             BaseController controller = loader.getController();
             if (controller != null) {
                 controller.setStage(stage);
@@ -65,13 +65,13 @@ public abstract class BaseController implements Initializable {
             
             stage.getScene().setRoot(root);
         } catch (Exception e) {
-            System.err.println("Klaida keičiant langą: " + fxmlPath);
+            System.err.println("Error changing window: " + fxmlPath);
             e.printStackTrace();
         }
     }
     
     /**
-     * Uždaro esamą langą
+     * Closes current window
      */
     protected void closeWindow() {
         if (stage != null) {

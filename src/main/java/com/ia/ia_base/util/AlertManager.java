@@ -6,13 +6,13 @@ import javafx.scene.control.ButtonType;
 import java.util.Optional;
 
 /**
- * Klasė alertų ir dialogo langų valdymui.
- * Visi alertai turėtų būti sukurti per šią klasę.
+ * Class for managing alerts and dialog windows.
+ * All alerts should be created through this class.
  */
 public class AlertManager {
     
     /**
-     * Rodo informacijos alertą
+     * Shows information alert
      */
     public static void showInfo(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -23,7 +23,7 @@ public class AlertManager {
     }
     
     /**
-     * Rodo klaidos alertą
+     * Shows error alert
      */
     public static void showError(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -34,7 +34,7 @@ public class AlertManager {
     }
     
     /**
-     * Rodo įspėjimo alertą
+     * Shows warning alert
      */
     public static void showWarning(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -45,8 +45,8 @@ public class AlertManager {
     }
     
     /**
-     * Rodo patvirtinimo alertą
-     * @return true jei pasirinkta OK, false jei Atšaukti
+     * Shows confirmation alert
+     * @return true if OK selected, false if Cancel
      */
     public static boolean showConfirmation(String title, String header, String message) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -59,29 +59,29 @@ public class AlertManager {
     }
     
     /**
-     * Rodo patvirtinimo alertą su paprastesniu interfeisu
-     * @return true jei pasirinkta OK, false jei Atšaukti
+     * Shows confirmation alert with simpler interface
+     * @return true if OK selected, false if Cancel
      */
     public static boolean confirm(String message) {
-        return showConfirmation("Patvirtinimas", null, message);
+        return showConfirmation("Confirmation", null, message);
     }
     
     /**
-     * Rodo patvirtinimo alertą išeiti iš programos
-     * @return true jei pasirinkta OK, false jei Atšaukti
+     * Shows confirmation alert to exit application
+     * @return true if OK selected, false if Cancel
      */
     public static boolean confirmExit() {
-        return showConfirmation("Patvirtinimas", "Išeiti iš programos", 
-                              "Ar tikrai norite išeiti iš programos?");
+        return showConfirmation("Confirmation", "Exit Application", 
+                              "Are you sure you want to exit the application?");
     }
     
     /**
-     * Rodo patvirtinimo alertą ištrinti įrašą
-     * @return true jei pasirinkta OK, false jei Atšaukti
+     * Shows confirmation alert to delete record
+     * @return true if OK selected, false if Cancel
      */
     public static boolean confirmDelete(String itemName) {
-        return showConfirmation("Patvirtinimas", "Ištrinti įrašą", 
-                              "Ar tikrai norite ištrinti: " + itemName + "?");
+        return showConfirmation("Confirmation", "Delete Record", 
+                              "Are you sure you want to delete: " + itemName + "?");
     }
 }
 

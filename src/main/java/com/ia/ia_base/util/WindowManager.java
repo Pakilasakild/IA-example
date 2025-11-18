@@ -9,27 +9,27 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 /**
- * Klasė langų valdymui.
- * Supaprastina naujų langų atidarymą.
+ * Class for window management.
+ * Simplifies opening new windows.
  */
 public class WindowManager {
     
     /**
-     * Atidaro naują langą iš FXML failo
-     * @param fxmlPath kelias iki FXML failo (pvz., "views/MainView.fxml")
-     * @param title lango pavadinimas
-     * @return Stage objektas
+     * Opens new window from FXML file
+     * @param fxmlPath path to FXML file (e.g., "views/MainView.fxml")
+     * @param title window title
+     * @return Stage object
      */
     public static Stage openWindow(String fxmlPath, String title) {
         return openWindow(fxmlPath, title, false);
     }
     
     /**
-     * Atidaro naują langą iš FXML failo
-     * @param fxmlPath kelias iki FXML failo
-     * @param title lango pavadinimas
-     * @param modal ar langas turi būti modalinis
-     * @return Stage objektas
+     * Opens new window from FXML file
+     * @param fxmlPath path to FXML file
+     * @param title window title
+     * @param modal whether window should be modal
+     * @return Stage object
      */
     public static Stage openWindow(String fxmlPath, String title, boolean modal) {
         try {
@@ -44,7 +44,7 @@ public class WindowManager {
                 stage.initModality(Modality.APPLICATION_MODAL);
             }
             
-            // Nustatome Stage objektą controlleryje, jei controlleris yra BaseController
+            // Set Stage object in controller if controller is BaseController
             Object controller = loader.getController();
             if (controller instanceof com.ia.ia_base.controllers.BaseController) {
                 ((com.ia.ia_base.controllers.BaseController) controller).setStage(stage);
@@ -53,14 +53,14 @@ public class WindowManager {
             stage.show();
             return stage;
         } catch (IOException e) {
-            System.err.println("Klaida atidarant langą: " + fxmlPath);
+            System.err.println("Error opening window: " + fxmlPath);
             e.printStackTrace();
             return null;
         }
     }
     
     /**
-     * Atidaro langą su nurodytais matmenimis
+     * Opens window with specified dimensions
      */
     public static Stage openWindow(String fxmlPath, String title, double width, double height) {
         try {
@@ -73,14 +73,14 @@ public class WindowManager {
             stage.show();
             return stage;
         } catch (IOException e) {
-            System.err.println("Klaida atidarant langą: " + fxmlPath);
+            System.err.println("Error opening window: " + fxmlPath);
             e.printStackTrace();
             return null;
         }
     }
     
     /**
-     * Uždaro langą
+     * Closes window
      */
     public static void closeWindow(Stage stage) {
         if (stage != null) {

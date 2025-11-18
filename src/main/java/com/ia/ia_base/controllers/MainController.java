@@ -8,7 +8,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.layout.BorderPane;
 
 /**
- * Pagrindinio lango controlleris su meniu sistema.
+ * Main window controller with menu system.
  */
 public class MainController extends BaseController {
     
@@ -42,30 +42,30 @@ public class MainController extends BaseController {
     }
     
     /**
-     * Nustato meniu veiksmus
+     * Sets up menu actions
      */
     private void setupMenuActions() {
-        // Uždaryti aplikaciją su patvirtinimu
+        // Close application with confirmation
         exitMenuItem.setOnAction(e -> {
             confirmExit();
         });
         
-        // Atidaryti pavyzdinį langą (pakeičia esamą langą)
+        // Open example window (replaces current window)
         exampleViewMenuItem.setOnAction(e -> {
             changeScene("views/ExampleView.fxml");
             if (stage != null) {
-                stage.setTitle("Pavyzdinis langas");
+                stage.setTitle("Example Window");
             }
         });
         
-        // Apie meniu
+        // About menu
         aboutMenuItem.setOnAction(e -> {
-            openModalWindow("views/AboutView.fxml", "Apie");
+            openModalWindow("views/AboutView.fxml", "About");
         });
     }
     
     /**
-     * Patvirtina ar tikrai norite išeiti iš programos
+     * Confirms if user really wants to exit the application
      */
     private void confirmExit() {
         if (AlertManager.confirmExit()) {
@@ -76,19 +76,19 @@ public class MainController extends BaseController {
     }
     
     /**
-     * Atidaro pavyzdinį langą (naudojama iš mygtuko)
-     * Pakeičia esamą langą vietoj atidarymo naujo
+     * Opens example window (used from button)
+     * Replaces current window instead of opening new one
      */
     @FXML
     private void openExampleView() {
         changeScene("views/ExampleView.fxml");
         if (stage != null) {
-            stage.setTitle("Pavyzdinis langas");
+            stage.setTitle("Example Window");
         }
     }
     
     /**
-     * Prideda naują meniu punktą programiškai
+     * Adds new menu item programmatically
      */
     public void addMenuItem(String menuName, String itemName, Runnable action) {
         Menu menu = menuBar.getMenus().stream()

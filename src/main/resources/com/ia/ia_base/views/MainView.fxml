@@ -11,19 +11,19 @@
     <top>
         <MenuBar fx:id="menuBar">
             <menus>
-                <Menu text="Failas" fx:id="fileMenu">
+                <Menu text="File" fx:id="fileMenu">
                     <items>
-                        <MenuItem text="Uždaryti" fx:id="exitMenuItem" mnemonicParsing="false"/>
+                        <MenuItem text="Exit" fx:id="exitMenuItem" mnemonicParsing="false"/>
                     </items>
                 </Menu>
-                <Menu text="Langai" fx:id="viewMenu">
+                <Menu text="Windows" fx:id="viewMenu">
                     <items>
-                        <MenuItem text="Pavyzdinis langas" fx:id="exampleViewMenuItem" mnemonicParsing="false"/>
+                        <MenuItem text="Example Window" fx:id="exampleViewMenuItem" mnemonicParsing="false"/>
                     </items>
                 </Menu>
-                <Menu text="Pagalba" fx:id="helpMenu">
+                <Menu text="Help" fx:id="helpMenu">
                     <items>
-                        <MenuItem text="Apie" fx:id="aboutMenuItem" mnemonicParsing="false"/>
+                        <MenuItem text="About" fx:id="aboutMenuItem" mnemonicParsing="false"/>
                     </items>
                 </Menu>
             </menus>
@@ -36,10 +36,10 @@
                 <Insets top="20" right="20" bottom="20" left="20"/>
             </padding>
             
-            <Label text="Sveiki atvykę į IA Base Application!" style="-fx-font-size: 24px;"/>
-            <Label text="Naudokite meniu, kad atidarytumėte naujus langus." style="-fx-font-size: 14px;"/>
+            <Label text="Welcome to IA Base Application!" style="-fx-font-size: 24px;"/>
+            <Label text="Use the menu to open new windows." style="-fx-font-size: 14px;"/>
             
-            <Button text="Atidaryti pavyzdinį langą" 
+            <Button text="Open Example Window" 
                     onAction="#openExampleView" 
                     style="-fx-font-size: 14px; -fx-padding: 10 20 10 20;"/>
         </VBox>

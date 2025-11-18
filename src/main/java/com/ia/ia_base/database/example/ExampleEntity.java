@@ -1,9 +1,9 @@
 package com.ia.ia_base.database.example;
 
 /**
- * Pavyzdinė Entity klasė.
+ * Example Entity class.
  * 
- * Ši klasė atspindi duomenų bazės lentelės struktūrą.
+ * This class reflects the database table structure.
  */
 public class ExampleEntity {
     private int id;

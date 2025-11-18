@@ -1,11 +1,11 @@
--- Duomenų bazės sukūrimo skriptas
--- Paleiskite šį skriptą MySQL serveryje
+-- Database creation script
+-- Run this script on MySQL server
 
--- Sukurti duomenų bazę
+-- Create database
 CREATE DATABASE IF NOT EXISTS ia_database;
 USE ia_database;
 
--- Pavyzdinė lentelė (galite ištrinti ir sukurti savo)
+-- Example table (you can delete and create your own)
 CREATE TABLE IF NOT EXISTS example_table (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
@@ -13,11 +13,11 @@ CREATE TABLE IF NOT EXISTS example_table (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Pavyzdiniai duomenys
+-- Example data
 INSERT INTO example_table (name, description) VALUES
-('Pavyzdys 1', 'Tai yra pirmasis pavyzdys'),
-('Pavyzdys 2', 'Tai yra antrasis pavyzdys');
+('Example 1', 'This is the first example'),
+('Example 2', 'This is the second example');
 
--- Patikrinti duomenis
+-- Check data
 SELECT * FROM example_table;
 

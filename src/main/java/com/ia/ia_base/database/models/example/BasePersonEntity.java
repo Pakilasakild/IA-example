@@ -1,8 +1,8 @@
 package com.ia.ia_base.database.models.example;
 
 /**
- * Bazinė klasė - pavyzdys paveldėjimui
- * Turi bendras savybes, kurias paveldi StudentEntity ir TeacherEntity
+ * Base class - inheritance example
+ * Has common properties that StudentEntity and TeacherEntity inherit
  */
 public abstract class BasePersonEntity {
     protected int id;
@@ -19,7 +19,7 @@ public abstract class BasePersonEntity {
         this.phone = phone;
     }
     
-    // Getters ir Setters
+    // Getters and Setters
     public int getId() {
         return id;
     }

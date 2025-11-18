@@ -23,8 +23,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Pavyzdinio lango controlleris.
- * Parodo kaip lengvai galima sukurti naują langą su status bar.
+ * Example window controller.
+ * Shows how easy it is to create a new window with status bar.
  */
 public class ExampleController extends BaseController {
     
@@ -45,19 +45,19 @@ public class ExampleController extends BaseController {
     
     @Override
     public void initialize(java.net.URL location, java.util.ResourceBundle resources) {
-        messageLabel.setText("Sveiki atvykę į pavyzdinį langą!");
+        messageLabel.setText("Welcome to the example window!");
         
-        // Nustatome status bar
-        statusLabel.setText("Parengta");
+        // Set status bar
+        statusLabel.setText("Ready");
         
-        // Inicializuojame TableView
+        // Initialize TableView
         tableData = FXCollections.observableArrayList();
         tableView.setItems(tableData);
         
-        // Nustatome datą ir laiką
+        // Set date and time
         updateDateTime();
         
-        // Sukuriame Timeline, kuris atnaujina datą ir laiką kas sekundę
+        // Create Timeline that updates date and time every second
         dateTimeTimeline = new Timeline(
             new KeyFrame(Duration.seconds(1), e -> updateDateTime())
         );
@@ -66,7 +66,7 @@ public class ExampleController extends BaseController {
     }
     
     /**
-     * Atnaujina datą ir laiką status bar
+     * Updates date and time in status bar
      */
     private void updateDateTime() {
         LocalDateTime now = LocalDateTime.now();
@@ -75,30 +75,30 @@ public class ExampleController extends BaseController {
     }
     
     /**
-     * Užkrauna CSV failą į TableView
+     * Loads CSV file into TableView
      */
     @FXML
     private void loadCSVFile() {
         FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Pasirinkite CSV failą");
+        fileChooser.setTitle("Select CSV File");
         fileChooser.getExtensionFilters().add(
-            new FileChooser.ExtensionFilter("CSV failai", "*.csv", "*.txt")
+            new FileChooser.ExtensionFilter("CSV Files", "*.csv", "*.txt")
         );
         
         File file = fileChooser.showOpenDialog(stage);
         if (file != null) {
             try {
                 loadCSV(file);
-                statusLabel.setText("Užkrautas: " + file.getName());
+                statusLabel.setText("Loaded: " + file.getName());
             } catch (IOException e) {
-                statusLabel.setText("Klaida: " + e.getMessage());
-                AlertManager.showError("Klaida", "Nepavyko užkrauti failo: " + e.getMessage());
+                statusLabel.setText("Error: " + e.getMessage());
+                AlertManager.showError("Error", "Failed to load file: " + e.getMessage());
             }
         }
     }
     
     /**
-     * Skaito CSV failą ir užkrauna į TableView
+     * Reads CSV file and loads into TableView
      */
     private void loadCSV(File file) throws IOException {
         List<String[]> rows = new ArrayList<>();
@@ -112,28 +112,28 @@ public class ExampleController extends BaseController {
                 String[] values = line.split(",");
                 
                 if (firstLine) {
-                    // Pirmoji eilutė - stulpelių pavadinimai
+                    // First line - column names
                     headers = new ArrayList<>();
                     for (String value : values) {
                         headers.add(value.trim());
                     }
                     firstLine = false;
                 } else {
-                    // Kitos eilutės - duomenys
+                    // Other lines - data
                     rows.add(values);
                 }
             }
         }
         
-        // Išvalome senus duomenis
+        // Clear old data
         tableData.clear();
         tableView.getColumns().clear();
         
         if (headers == null || headers.isEmpty()) {
-            throw new IOException("CSV failas neturi stulpelių pavadinimų");
+            throw new IOException("CSV file does not have column headers");
         }
         
-        // Sukuriame stulpelius
+        // Create columns
         for (int i = 0; i < headers.size(); i++) {
             String headerName = headers.get(i);
             TableColumn<Map<String, String>, String> column = new TableColumn<>(headerName);
@@ -145,7 +145,7 @@ public class ExampleController extends BaseController {
             tableView.getColumns().add(column);
         }
         
-        // Užkrauname duomenis
+        // Load data
         for (String[] row : rows) {
             Map<String, String> rowData = new HashMap<>();
             for (int i = 0; i < headers.size(); i++) {
@@ -155,11 +155,11 @@ public class ExampleController extends BaseController {
             tableData.add(rowData);
         }
         
-        messageLabel.setText("Užkrauta eilučių: " + rows.size());
+        messageLabel.setText("Loaded rows: " + rows.size());
     }
     
     /**
-     * Grįžti į pagrindinį langą
+     * Go back to main window
      */
     @FXML
     private void goBack() {
@@ -170,7 +170,7 @@ public class ExampleController extends BaseController {
     }
     
     /**
-     * Uždaryti aplikaciją
+     * Close application
      */
     @FXML
     private void closeApplication() {
@@ -182,7 +182,7 @@ public class ExampleController extends BaseController {
     @Override
     public void setStage(javafx.stage.Stage stage) {
         super.setStage(stage);
-        // Kai langas uždaromas, sustabdykite Timeline
+        // When window closes, stop Timeline
         if (stage != null) {
             stage.setOnCloseRequest(e -> {
                 if (dateTimeTimeline != null) {

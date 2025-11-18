@@ -1,8 +1,8 @@
 package com.ia.ia_base.database.models.example;
 
 /**
- * Studento klasė - PAVELDĖJIMO pavyzdys
- * Paveldi BasePersonEntity ir prideda studento specifines savybes
+ * Student class - INHERITANCE example
+ * Extends BasePersonEntity and adds student-specific properties
  */
 public class StudentEntityExample extends BasePersonEntity {
     private String studentNumber;
@@ -10,18 +10,18 @@ public class StudentEntityExample extends BasePersonEntity {
     private double gpa;
     
     public StudentEntityExample() {
-        super(); // Iškviečia tėvinės klasės konstruktorių
+        super(); // Calls parent class constructor
     }
     
     public StudentEntityExample(String name, String email, String phone,
                                 String studentNumber, int year, double gpa) {
-        super(name, email, phone); // Iškviečia tėvinės klasės konstruktorių
+        super(name, email, phone); // Calls parent class constructor
         this.studentNumber = studentNumber;
         this.year = year;
         this.gpa = gpa;
     }
     
-    // Tik StudentEntityExample specifiniai getters ir setters
+    // Only StudentEntityExample specific getters and setters
     public String getStudentNumber() {
         return studentNumber;
     }

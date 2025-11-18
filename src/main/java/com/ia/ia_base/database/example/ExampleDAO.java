@@ -7,14 +7,14 @@ import java.sql.SQLException;
 import java.util.List;
 
 /**
- * Pavyzdinė DAO klasė, parodanti kaip naudoti BaseDAO.
+ * Example DAO class showing how to use BaseDAO.
  * 
- * Šis pavyzdys rodo kaip sukurti savo DAO klasę darbui su duomenų baze.
+ * This example shows how to create your own DAO class for working with database.
  */
 public class ExampleDAO extends BaseDAO<ExampleEntity> {
     
     /**
-     * Gauna visus įrašus iš lentelės
+     * Gets all records from table
      */
     public List<ExampleEntity> findAll() throws SQLException {
         String sql = "SELECT * FROM example_table";
@@ -22,7 +22,7 @@ public class ExampleDAO extends BaseDAO<ExampleEntity> {
     }
     
     /**
-     * Gauna įrašą pagal ID
+     * Gets record by ID
      */
     public ExampleEntity findById(int id) throws SQLException {
         String sql = "SELECT * FROM example_table WHERE id = ?";
@@ -31,7 +31,7 @@ public class ExampleDAO extends BaseDAO<ExampleEntity> {
     }
     
     /**
-     * Sukuria naują įrašą
+     * Creates new record
      */
     public int create(ExampleEntity entity) throws SQLException {
         String sql = "INSERT INTO example_table (name, description) VALUES (?, ?)";
@@ -39,7 +39,7 @@ public class ExampleDAO extends BaseDAO<ExampleEntity> {
     }
     
     /**
-     * Atnaujina esamą įrašą
+     * Updates existing record
      */
     public int update(ExampleEntity entity) throws SQLException {
         String sql = "UPDATE example_table SET name = ?, description = ? WHERE id = ?";
@@ -47,7 +47,7 @@ public class ExampleDAO extends BaseDAO<ExampleEntity> {
     }
     
     /**
-     * Ištrina įrašą pagal ID
+     * Deletes record by ID
      */
     public int delete(int id) throws SQLException {
         String sql = "DELETE FROM example_table WHERE id = ?";
