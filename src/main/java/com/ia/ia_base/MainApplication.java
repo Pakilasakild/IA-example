@@ -32,7 +32,7 @@ public class MainApplication extends Application {
         }
         
         // Load main window
-        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("views/MainView.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("IA/Teachers/teacherViewMenu.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 800, 600);
         
         // Set Stage object in controller
