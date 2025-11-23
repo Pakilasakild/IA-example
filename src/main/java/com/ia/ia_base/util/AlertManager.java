@@ -1,6 +1,7 @@
 package com.ia.ia_base.util;
 
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 
 import java.util.Optional;
@@ -53,9 +54,14 @@ public class AlertManager {
         alert.setTitle(title);
         alert.setHeaderText(header);
         alert.setContentText(message);
+
+        ButtonType yes = new ButtonType("Yes", ButtonType.OK.getButtonData());
+        ButtonType no = new ButtonType("No", ButtonBar.ButtonData.CANCEL_CLOSE);
+
+        alert.getButtonTypes().setAll(yes, no);
         
         Optional<ButtonType> result = alert.showAndWait();
-        return result.isPresent() && result.get() == ButtonType.OK;
+        return result.isPresent() && result.get() == yes;
     }
     
     /**
@@ -82,6 +88,11 @@ public class AlertManager {
     public static boolean confirmDelete(String itemName) {
         return showConfirmation("Confirmation", "Delete Record", 
                               "Are you sure you want to delete: " + itemName + "?");
+    }
+
+    public static boolean confirmLogout() {
+        return showConfirmation("Confirmation", "Log out of account",
+                "Are you sure you want to log out?");
     }
 }
 

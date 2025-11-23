@@ -1,7 +1,9 @@
 package com.ia.ia_base;
 
 import com.ia.ia_base.config.AppConfig;
-import com.ia.ia_base.controllers.MainController;
+import com.ia.ia_base.controllers.LoginController;
+import com.ia.ia_base.controllers.students.StudentMainController;
+import com.ia.ia_base.controllers.teachers.TeacherMainController;
 import com.ia.ia_base.database.DatabaseConnection;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -32,11 +34,11 @@ public class MainApplication extends Application {
         }
         
         // Load main window
-        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("IA/Teachers/teacherViewMenu.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 800, 600);
+        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("IA/login.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 600, 400);
         
         // Set Stage object in controller
-        MainController controller = fxmlLoader.getController();
+        LoginController controller = fxmlLoader.getController();
         if (controller != null) {
             controller.setStage(stage);
         }

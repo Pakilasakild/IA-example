@@ -33,7 +33,7 @@ public class WindowManager {
      */
     public static Stage openWindow(String fxmlPath, String title, boolean modal) {
         try {
-            FXMLLoader loader = new FXMLLoader(WindowManager.class.getResource("/com/ia/ia_base/" + fxmlPath));
+            FXMLLoader loader = new FXMLLoader(WindowManager.class.getResource(fxmlPath));
             Parent root = loader.load();
             
             Stage stage = new Stage();

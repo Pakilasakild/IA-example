@@ -6,11 +6,11 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="createFlashcard" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ia.ia_base.controllers.teachers.FlashcardController">
    <children>
       <Text layoutX="40.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Create New Flashcard">
          <font>
-            <Font size="35.0" />
+            <Font name="System Bold" size="35.0" />
          </font>
       </Text>
       <TextField fx:id="questionTextFieldFlash" layoutX="40.0" layoutY="100.0" prefHeight="31.0" prefWidth="309.0" promptText="Enter Question">
@@ -24,5 +24,6 @@
          </font>
       </TextField>
       <Button fx:id="createFlashcardBTN" layoutX="40.0" layoutY="200.0" mnemonicParsing="false" text="Create Flashcard" />
+      <Button fx:id="cancelBTN" layoutX="296.0" layoutY="200.0" mnemonicParsing="false" text="Cancel" />
    </children>
 </AnchorPane>

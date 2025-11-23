@@ -1,6 +1,9 @@
 package com.ia.ia_base.controllers;
 
+import com.ia.ia_base.util.AlertManager;
 import com.ia.ia_base.util.WindowManager;
+import javafx.application.Platform;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;

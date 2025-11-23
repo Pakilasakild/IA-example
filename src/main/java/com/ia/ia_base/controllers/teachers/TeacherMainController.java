@@ -1,0 +1,94 @@
+package com.ia.ia_base.controllers.teachers;
+
+import com.ia.ia_base.util.AlertManager;
+import javafx.application.Platform;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.control.MenuItem;
+import com.ia.ia_base.controllers.BaseController;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
+
+import java.net.URL;
+
+public class TeacherMainController extends BaseController {
+    @FXML
+    public BorderPane mainPage;
+    @FXML
+    public MenuItem changePasswordMenu;
+    @FXML
+    public MenuItem logoutMenu;
+    @FXML
+    public MenuItem quitMenu;
+    @FXML
+    public MenuItem viewFlashcardsMenu;
+    @FXML
+    public MenuItem createFlashcardMenu;
+    @FXML
+    public MenuItem viewQuizzesMenu;
+    @FXML
+    public MenuItem addQuizMenu;
+    @FXML
+    public MenuItem addQuizQuestionMenu;
+    @FXML
+    public MenuItem deleteQuizMenu;
+    @FXML
+    public MenuItem importFlashcardMenu;
+
+    @Override
+    public void initialize(java.net.URL location, java.util.ResourceBundle resources) {
+        setupMenuActions();
+    }
+
+
+    private void setupMenuActions() {
+        quitMenu.setOnAction(e -> {
+                Platform.exit();
+        });
+
+        logoutMenu.setOnAction(e -> {
+            if (AlertManager.confirmLogout()) {
+                //logout code here
+            }
+        });
+        changePasswordMenu.setOnAction(e -> {
+            // add logic for logout
+        });
+        createFlashcardMenu.setOnAction(e -> {
+            openNewWindow("/com/ia/ia_base/IA/Teachers/createFlashcard.fxml", "Create flashcard");
+        });
+        importFlashcardMenu.setOnAction(e -> {
+            openNewWindow("/com/ia/ia_base/IA/Teachers/teacherUploadFlashcard.fxml", "Import flashcards");
+        });
+        viewFlashcardsMenu.setOnAction(e -> {
+            try {
+                URL fxml = getClass().getResource("/com/ia/ia_base/IA/Teachers/flashcardTableTeach.fxml");
+                assert fxml != null;
+                AnchorPane pane = FXMLLoader.load(fxml);
+                mainPage.setCenter(pane);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        });
+        viewQuizzesMenu.setOnAction(e -> {
+            try {
+                URL fxml = getClass().getResource("/com/ia/ia_base/IA/Teachers/viewQuizzesTeacher.fxml");
+                assert fxml != null;
+                AnchorPane pane = FXMLLoader.load(fxml);
+                mainPage.setCenter(pane);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        });
+        addQuizMenu.setOnAction(e -> {
+            openNewWindow("/com/ia/ia_base/IA/Teachers/createQuiz.fxml", "Create new quiz");
+        });
+        addQuizQuestionMenu.setOnAction(e -> {
+            openNewWindow("/com/ia/ia_base/IA/Teachers/createQuizQuestion.fxml", "Create new quiz question");
+        });
+        deleteQuizMenu.setOnAction(e -> {
+            openNewWindow("/com/ia/ia_base/IA/Teachers/deleteQuiz.fxml", "Delete quiz");
+        });
+    }
+
+}
