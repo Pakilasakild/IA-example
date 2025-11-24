@@ -35,7 +35,7 @@ public class MainApplication extends Application {
         
         // Load main window
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("IA/login.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 600, 400);
+        Scene scene = new Scene(fxmlLoader.load(), 450, 400);
         
         // Set Stage object in controller
         LoginController controller = fxmlLoader.getController();
