@@ -34,11 +34,13 @@ public class MainApplication extends Application {
         }
         
         // Load main window
-        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("IA/login.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 450, 400);
+        // FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("IA/login.fxml"));
+         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("IA/Teachers/teacherViewMenu.fxml"));
+         Scene scene = new Scene(fxmlLoader.load(), 1000, 500); // teacher
+        //Scene scene = new Scene(fxmlLoader.load(), 450, 400); // login
         
         // Set Stage object in controller
-        LoginController controller = fxmlLoader.getController();
+        TeacherMainController controller = fxmlLoader.getController();
         if (controller != null) {
             controller.setStage(stage);
         }
