@@ -11,12 +11,12 @@ public class AdminUser extends User{
 
     @Override
     public boolean canManageUsers() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean canManageCategories() {
-        return false;
+        return true;
     }
 
     @Override
