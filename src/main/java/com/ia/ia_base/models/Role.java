@@ -1,0 +1,33 @@
+package com.ia.ia_base.models;
+
+public class Role {
+    private int id;
+    private int name;
+
+
+    @Override
+    public String toString() {
+        return "Role{" + "id=" + id + ", name=" + name + '}';
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getName() {
+        return name;
+    }
+
+    public void setName(int name) {
+        this.name = name;
+    }
+
+    public Role(int id, int name) {
+        this.id = id;
+        this.name = name;
+    }
+}
