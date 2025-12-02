@@ -39,7 +39,7 @@ public abstract class User {
     public abstract boolean canManageUsers();
 
     public abstract boolean canManageCategories();
-    public abstract boolean isAdmin();
+    public abstract boolean isStudent();
 
     public String getEmail() {
         return email;

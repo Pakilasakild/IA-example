@@ -1,12 +1,12 @@
 package com.ia.ia_base.models;
 
-public class RegisteredUser extends User {
+public class StudentUser extends User {
 
-    public RegisteredUser() {
+    public StudentUser() {
         super();
     }
 
-    public RegisteredUser(int id, String name, String passwordHash, String email, Role role) {
+    public StudentUser(int id, String name, String passwordHash, String email, Role role) {
         super(id, name, passwordHash, email, role);
     }
 
@@ -20,7 +20,7 @@ public class RegisteredUser extends User {
         return false;
     }
 
-    public boolean isAdmin(){
-        return false;
+    public boolean isStudent(){
+        return true;
     }
 }

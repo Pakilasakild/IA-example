@@ -15,4 +15,5 @@ module com.ia.ia_base {
     exports com.ia.ia_base.util;
     exports com.ia.ia_base.config;
     exports com.ia.ia_base.database.models.example;
+    exports com.ia.ia_base.database.dao;
 }

@@ -1,6 +1,7 @@
-package com.ia.ia_base.database;
+package com.ia.ia_base.database.dao;
 
 import com.ia.ia_base.config.AppConfig;
+import com.ia.ia_base.database.DatabaseConnection;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

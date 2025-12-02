@@ -1,11 +1,11 @@
 package com.ia.ia_base.models;
 
-public class AdminUser extends User{
-    public AdminUser() {
+public class TeacherUser extends User{
+    public TeacherUser() {
         super();
     }
 
-    public AdminUser(int id, String name, String passwordHash, String email, Role role) {
+    public TeacherUser(int id, String name, String passwordHash, String email, Role role) {
         super(id, name, passwordHash, email, role);
     }
 
@@ -20,7 +20,7 @@ public class AdminUser extends User{
     }
 
     @Override
-    public boolean isAdmin() {
-        return true;
+    public boolean isStudent() {
+        return false;
     }
 }
