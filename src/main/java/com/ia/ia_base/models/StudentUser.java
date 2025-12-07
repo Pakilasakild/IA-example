@@ -6,8 +6,8 @@ public class StudentUser extends User {
         super();
     }
 
-    public StudentUser(int id, String name, String passwordHash, String email, Role role) {
-        super(id, name, passwordHash, email, role);
+    public StudentUser(int id, String passwordHash, String email, Role role) {
+        super(id, passwordHash, email, role);
     }
 
     @Override

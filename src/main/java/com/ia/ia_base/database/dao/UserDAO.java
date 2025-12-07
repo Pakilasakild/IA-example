@@ -1,6 +1,8 @@
 package com.ia.ia_base.database.dao;
 
 import com.ia.ia_base.models.Role;
+import com.ia.ia_base.models.StudentUser;
+import com.ia.ia_base.models.TeacherUser;
 import com.ia.ia_base.models.User;
 
 import java.sql.ResultSet;
@@ -27,15 +29,15 @@ public class UserDAO extends BaseDAO<User> {
     }
 
     public int create(User entity) throws SQLException {
-        String sql = "INSERT INTO users(name, email, password_has, role_id, is_blocked, must_change_password) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO users(email, password_hash, role_id, is_blocked, must_change_password) VALUES (?, ?, ?, ?, ?)";
         Integer roleId = entity.getRole() != null && entity.getRole().getId() > 0 ? entity.getRole().getId() : null;
-        return executeUpdate(entity.getName(), entity.getEmail(), entity.getPasswordHash(), roleId, entity.isBlocked(), entity.isMustChangePassword());
+        return executeUpdate(sql, entity.getEmail(), entity.getPasswordHash(), roleId, entity.isBlocked(), entity.isMustChangePassword());
     }
 
     public int update(User entity) throws SQLException {
-        String sql = "UPDATE users SET name = ?, email = ?, password_hash = ?, role_id = ?, is_blocked = ?, must_change_password = ? WHERE id = ?";
+        String sql = "UPDATE users SET email = ?, password_hash = ?, role_id = ?, is_blocked = ?, must_change_password = ? WHERE id = ?";
         Integer roleId = entity.getRole() != null && entity.getRole().getId() > 0 ? entity.getRole().getId() : null;
-        return executeUpdate(entity.getName(), entity.getEmail(), entity.getPasswordHash(), roleId, entity.isBlocked(), entity.isMustChangePassword(), entity.getId());
+        return executeUpdate(sql, entity.getEmail(), entity.getPasswordHash(), roleId, entity.isBlocked(), entity.isMustChangePassword(), entity.getId());
     }
     public int delete (int id) throws SQLException{
         String sql = "DELETE FROM users WHERE id = ?";
@@ -44,7 +46,36 @@ public class UserDAO extends BaseDAO<User> {
 
     @Override
     protected User mapResultSetToEntity(ResultSet rs) throws SQLException {
-        //Either admin or registered
-        //return new User(rs.getString("name"), rs.getString("email"), rs.getString("password_hash"), rs.getInt("role_id"), rs.getBoolean("is_blocked"), rs.getBoolean("must_change_password"));
+        // 1) Decide which subclass to create based on role_name
+        String roleName = rs.getString("role_name");  // from your SELECT alias
+        User user;
+
+        if ("teacher".equalsIgnoreCase(roleName)) {
+            user = new TeacherUser();
+        } else if ("student".equalsIgnoreCase(roleName)) {
+            user = new StudentUser();
+        } else {
+            // Fallback: if you ever add admin or others, handle here
+            // For now, you can either:
+            //  - throw, or
+            //  - default to StudentUser/TeacherUser
+            throw new IllegalStateException("Unknown role_name in DB: " + roleName);
+        }
+
+        // 2) Map common User fields
+        user.setId(rs.getInt("id"));
+        user.setEmail(rs.getString("email"));
+        user.setPasswordHash(rs.getString("password_hash"));
+        user.setBlocked(rs.getBoolean("is_blocked"));
+        user.setMustChangePassword(rs.getBoolean("must_change_password"));
+
+        // 3) Map Role object
+        int roleId = rs.getInt("role_id");  // from alias in SELECT
+        if (roleId > 0) {
+            Role role = new Role(roleId, roleName);
+            user.setRole(role);
+        }
+
+        return user;
     }
 }

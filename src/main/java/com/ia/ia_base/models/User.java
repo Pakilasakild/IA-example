@@ -2,7 +2,6 @@ package com.ia.ia_base.models;
 
 public abstract class User {
     private int id;
-    private String name;
     private String email;
     private String passwordHash;
     private Role role;
@@ -12,9 +11,8 @@ public abstract class User {
     public User() {
     }
 
-    public User(int id, String name, String passwordHash, String email, Role role) {
+    public User(int id, String passwordHash, String email, Role role) {
         this.id = id;
-        this.name = name;
         this.passwordHash = passwordHash;
         this.role = role;
         this.email = email;
@@ -26,14 +24,6 @@ public abstract class User {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public abstract boolean canManageUsers();

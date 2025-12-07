@@ -18,6 +18,10 @@ import java.sql.SQLException;
  * This class starts the JavaFX application.
  */
 public class MainApplication extends Application {
+    public static void main(String[] args) {
+        launch();
+    }
+
     @Override
     public void start(Stage stage) throws IOException {
         // Try to connect to database only if it's enabled
@@ -32,32 +36,26 @@ public class MainApplication extends Application {
         } else {
             System.out.println("Database not used. Application will run without DB.");
         }
-        
+
         // Load main window
-        // FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("IA/login.fxml"));
-         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("IA/Teachers/teacherViewMenu.fxml"));
-         Scene scene = new Scene(fxmlLoader.load(), 1000, 500); // teacher
-        //Scene scene = new Scene(fxmlLoader.load(), 450, 400); // login
-        
+        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("IA/login.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 450, 400); // login
+
         // Set Stage object in controller
-        TeacherMainController controller = fxmlLoader.getController();
+        LoginController controller = fxmlLoader.getController();
         if (controller != null) {
             controller.setStage(stage);
         }
-        
-        stage.setTitle("IA Base Application");
+
+        stage.setTitle("FactFlux Login");
         stage.setScene(scene);
         stage.show();
     }
-    
+
     @Override
     public void stop() {
         // Close database connection before closing application
         DatabaseConnection.getInstance().closeConnection();
-    }
-    
-    public static void main(String[] args) {
-        launch();
     }
 }
 
