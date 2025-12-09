@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.44, for Win64 (x86_64)
 --
--- Host: localhost    Database: iabase
+-- Host: 127.0.0.1    Database: iabase
 -- ------------------------------------------------------
 -- Server version	8.0.44
 
@@ -30,7 +30,7 @@ CREATE TABLE `users` (
   `is_blocked` tinyint(1) DEFAULT '0',
   `must_change_password` tinyint(1) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -39,7 +39,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'dnasknow@gmail.com','root1',1,0,0),(2,'v4k4_lt@gymnasium.edu','randint',2,0,0);
+INSERT INTO `users` VALUES (4,'v4k4@gymn.edu','$2a$10$jvTye6AJGXgsvyyE7beILeJMo8Um3/aWEWf290q2WrIZBK2nAhX72',2,0,0),(5,'d@gmail.com','$2a$10$ROaJK.tDaUA2Ks3xuE8.r.cJJZ7ZHmvTje.67KbsvmU0dFtwecHpa',1,0,0),(6,'student@gmail.com','$2a$10$NcpR35Nt7xtAQp6n/BR/SuL.Yva2PznAZ0xJPlcCBYvKW1LMGXCaW',2,0,0);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -52,4 +52,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-12-07 20:19:42
+-- Dump completed on 2025-12-09  9:39:02
