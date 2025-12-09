@@ -1,6 +1,7 @@
 package com.ia.ia_base.controllers.teachers;
 
 import com.ia.ia_base.util.AlertManager;
+import com.ia.ia_base.util.SessionManager;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -48,11 +49,18 @@ public class TeacherMainController extends BaseController {
 
         logoutMenu.setOnAction(e -> {
             if (AlertManager.confirmLogout()) {
-                //logout code here
+                changeScene("IA/login.fxml");
+
+                if (stage != null) {
+                    stage.setTitle("FactFlux Login");
+                    stage.setWidth(470);
+                    stage.setHeight(450);
+                }
+                SessionManager.getInstance().logout();
             }
         });
         changePasswordMenu.setOnAction(e -> {
-            // add logic for logout
+            openNewWindow("/com/ia/ia_base/IA/changePassword.fxml", "Change password");
         });
         createFlashcardMenu.setOnAction(e -> {
             openNewWindow("/com/ia/ia_base/IA/Teachers/createFlashcard.fxml", "Create flashcard");
@@ -90,5 +98,4 @@ public class TeacherMainController extends BaseController {
             openNewWindow("/com/ia/ia_base/IA/Teachers/deleteQuiz.fxml", "Delete quiz");
         });
     }
-
 }

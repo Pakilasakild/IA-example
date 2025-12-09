@@ -39,7 +39,7 @@ public class UserDAO extends BaseDAO<User> {
         Integer roleId = entity.getRole() != null && entity.getRole().getId() > 0 ? entity.getRole().getId() : null;
         return executeUpdate(sql, entity.getEmail(), entity.getPasswordHash(), roleId, entity.isBlocked(), entity.isMustChangePassword(), entity.getId());
     }
-    public int delete (int id) throws SQLException{
+    public int delete(int id) throws SQLException{
         String sql = "DELETE FROM users WHERE id = ?";
         return executeUpdate(sql, id);
     }

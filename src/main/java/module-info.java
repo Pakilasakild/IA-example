@@ -3,6 +3,7 @@ module com.ia.ia_base {
     requires javafx.fxml;
     requires java.sql;
     requires java.desktop;
+    requires jbcrypt;
 
     opens com.ia.ia_base to javafx.fxml;
     opens com.ia.ia_base.controllers to javafx.fxml;

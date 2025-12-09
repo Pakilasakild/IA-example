@@ -7,6 +7,7 @@ import com.ia.ia_base.models.StudentUser;
 import com.ia.ia_base.models.TeacherUser;
 import com.ia.ia_base.models.User;
 import com.ia.ia_base.util.AlertManager;
+import com.ia.ia_base.util.PasswordHasher;
 /*
 TODO add hasher
 import com.ia.ia_base.util.PasswordHasher;
@@ -116,7 +117,12 @@ public class RegistrationController extends BaseController {
                 AlertManager.showError("Error", "System error: " + role + " role not found");
                 return;
             }
+
+
+
             User newUser;
+
+
 
             switch (role) {
                 case "student":
@@ -134,15 +140,11 @@ public class RegistrationController extends BaseController {
 
             newUser.setEmail(email);
 
-            // TODO: replace with real hashing
-            // String hash = PasswordHasher.hash(password);
-            // newUser.setPasswordHash(hash);
-            newUser.setPasswordHash(password); // TODO TEMP: plain password
-
+            String hash = PasswordHasher.hashPassword(password);
+            newUser.setPasswordHash(hash);
             newUser.setRole(accountRole);
             newUser.setBlocked(false);
             newUser.setMustChangePassword(false);
-
             userDAO.create(newUser);
 
             AlertManager.showInfo("Success", "Registration successful! You can now login.");
@@ -156,7 +158,6 @@ public class RegistrationController extends BaseController {
 
     @FXML
     private void handleLoginLink() {
-        // Use the same path you used in backToLoginBTN
         changeScene("IA/login.fxml");
         if (stage != null) {
             stage.setTitle("FactFlux Login");

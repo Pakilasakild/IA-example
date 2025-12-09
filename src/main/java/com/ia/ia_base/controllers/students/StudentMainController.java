@@ -2,6 +2,7 @@ package com.ia.ia_base.controllers.students;
 
 import com.ia.ia_base.controllers.BaseController;
 import com.ia.ia_base.util.AlertManager;
+import com.ia.ia_base.util.SessionManager;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -38,11 +39,18 @@ public class StudentMainController extends BaseController {
 
         logoutMenu.setOnAction(e -> {
             if (AlertManager.confirmLogout()) {
-                //logout code here
+                changeScene("IA/login.fxml");
+
+                if (stage != null) {
+                    stage.setTitle("FactFlux Login");
+                    stage.setWidth(470);
+                    stage.setHeight(450);
+                }
+                SessionManager.getInstance().logout();
             }
         });
         changePasswordMenu.setOnAction(e -> {
-            // add logic for logout
+            // add logic for password change
         });
         viewFlashcardsMenu.setOnAction(e -> {
             try {

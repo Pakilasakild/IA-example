@@ -5,6 +5,8 @@ import com.ia.ia_base.models.User;
 import com.ia.ia_base.util.AlertManager;
 //import com.ia.ia_base.util.PasswordHasher;
 //import com.ia.ia_base.util.SessionManager;
+import com.ia.ia_base.util.PasswordHasher;
+import com.ia.ia_base.util.SessionManager;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
@@ -29,8 +31,6 @@ public class LoginController extends BaseController {
     private TextField emailField;
     @FXML
     private PasswordField passwordField;
-    @FXML
-    private Hyperlink registerLink;
     private UserDAO userDAO;
 
     @Override
@@ -53,6 +53,9 @@ public class LoginController extends BaseController {
         createNewAccountBTN.setOnAction(e -> {
             handleRegisterLink();
         });
+        forgotPasswordBTN.setOnAction(e -> {
+                //TODO to be added
+        });
     }
 
     @FXML
@@ -71,6 +74,7 @@ public class LoginController extends BaseController {
         try {
             User user = userDAO.findByEmail(email);
 
+
             if (user == null) {
                 AlertManager.showError("Login Failed", "Invalid role, email or password");
                 return;
@@ -81,22 +85,20 @@ public class LoginController extends BaseController {
                 return;
             }
 
-            /*if (!PasswordHasher.verifyPassword(password, user.getPasswordHash())) {
+            if (!PasswordHasher.verifyPassword(password, user.getPasswordHash())) {
                 AlertManager.showError("Login Failed", "Invalid role, email or password");
                 return;
-            }*/
+            }
 
             if (!user.getRole().getName().equalsIgnoreCase(role)) {
                 AlertManager.showError("Login Failed", "Invalid role, email or password");
                 return;
             }
 
-            // Login successful
-            //SessionManager.getInstance().setCurrentUser(user);
+            SessionManager.getInstance().setCurrentUser(user);
 
-            // Check if password must be changed
             if (user.isMustChangePassword()) {
-                AlertManager.showWarning("Change Password", "You must change your password on first login.");
+                AlertManager.showWarning("Change Password", "You must change your password.");
                 // TODO: Open password change dialog, change from first login because no need for that
             }
 

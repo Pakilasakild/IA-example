@@ -37,11 +37,11 @@ public class MainApplication extends Application {
             System.out.println("Database not used. Application will run without DB.");
         }
 
-        // Load main window
-        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("IA/login.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 450, 400); // login
 
-        // Set Stage object in controller
+        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("IA/login.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 470, 400);
+
+
         LoginController controller = fxmlLoader.getController();
         if (controller != null) {
             controller.setStage(stage);
