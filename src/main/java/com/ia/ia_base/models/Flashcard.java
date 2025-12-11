@@ -1,12 +1,16 @@
 package com.ia.ia_base.models;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.value.ObservableValue;
+
 import java.util.ArrayList;
 
 public class Flashcard {
     private String question;
     private String answer;
     private ArrayList<String> tags;
-    private boolean isActive;
+    private BooleanProperty active = new SimpleBooleanProperty();
 
     public Flashcard() {
     }
@@ -41,11 +45,13 @@ public class Flashcard {
     }
 
     public boolean isActive() {
-        return isActive;
+        return active.getValue();
     }
 
-    public void setActive(boolean active) {
-        isActive = active;
+    public void setActive(boolean isActive) {
+        active.set(isActive);
     }
-
+    public BooleanProperty activeProperty() {
+        return active;
+    }
 }
