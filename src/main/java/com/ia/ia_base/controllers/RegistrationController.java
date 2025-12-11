@@ -117,13 +117,7 @@ public class RegistrationController extends BaseController {
                 AlertManager.showError("Error", "System error: " + role + " role not found");
                 return;
             }
-
-
-
             User newUser;
-
-
-
             switch (role) {
                 case "student":
                     newUser = new StudentUser();
@@ -137,19 +131,15 @@ public class RegistrationController extends BaseController {
                     AlertManager.showError("Error", "Unknown account type");
                     return;
             }
-
             newUser.setEmail(email);
-
             String hash = PasswordHasher.hashPassword(password);
             newUser.setPasswordHash(hash);
             newUser.setRole(accountRole);
             newUser.setBlocked(false);
             newUser.setMustChangePassword(false);
             userDAO.create(newUser);
-
             AlertManager.showInfo("Success", "Registration successful! You can now login.");
             handleLoginLink();
-
         } catch (SQLException e) {
             AlertManager.showError("Database Error", "Failed to register: " + e.getMessage());
             e.printStackTrace();

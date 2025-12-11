@@ -44,23 +44,14 @@ public class TeacherMainController extends BaseController {
 
     private void setupMenuActions() {
         quitMenu.setOnAction(e -> {
-                Platform.exit();
+            quitMenu();
         });
 
         logoutMenu.setOnAction(e -> {
-            if (AlertManager.confirmLogout()) {
-                changeScene("IA/login.fxml");
-
-                if (stage != null) {
-                    stage.setTitle("FactFlux Login");
-                    stage.setWidth(470);
-                    stage.setHeight(450);
-                }
-                SessionManager.getInstance().logout();
-            }
+            logoutMenu();
         });
         changePasswordMenu.setOnAction(e -> {
-            openNewWindow("/com/ia/ia_base/IA/changePassword.fxml", "Change password");
+            changePasswordMenu();
         });
         createFlashcardMenu.setOnAction(e -> {
             openNewWindow("/com/ia/ia_base/IA/Teachers/createFlashcard.fxml", "Create flashcard");

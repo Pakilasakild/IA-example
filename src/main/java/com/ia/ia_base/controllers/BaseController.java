@@ -1,9 +1,9 @@
 package com.ia.ia_base.controllers;
 
 import com.ia.ia_base.util.AlertManager;
+import com.ia.ia_base.util.SessionManager;
 import com.ia.ia_base.util.WindowManager;
 import javafx.application.Platform;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
@@ -80,6 +80,27 @@ public abstract class BaseController implements Initializable {
         if (stage != null) {
             WindowManager.closeWindow(stage);
         }
+    }
+
+    public void quitMenu() {
+        Platform.exit();
+    }
+
+    public void logoutMenu() {
+        if (AlertManager.confirmLogout()) {
+            changeScene("IA/login.fxml");
+
+            if (stage != null) {
+                stage.setTitle("FactFlux Login");
+                stage.setWidth(470);
+                stage.setHeight(450);
+            }
+            SessionManager.getInstance().logout();
+        }
+    }
+
+    public void changePasswordMenu() {
+        openNewWindow("/com/ia/ia_base/IA/changePassword.fxml", "Change password");
     }
 }
 

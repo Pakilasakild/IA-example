@@ -34,23 +34,14 @@ public class StudentMainController extends BaseController {
 
     public void setupMenuActions(){
         quitMenu.setOnAction(e -> {
-            Platform.exit();
+            quitMenu();
         });
 
         logoutMenu.setOnAction(e -> {
-            if (AlertManager.confirmLogout()) {
-                changeScene("IA/login.fxml");
-
-                if (stage != null) {
-                    stage.setTitle("FactFlux Login");
-                    stage.setWidth(470);
-                    stage.setHeight(450);
-                }
-                SessionManager.getInstance().logout();
-            }
+            logoutMenu();
         });
         changePasswordMenu.setOnAction(e -> {
-            // add logic for password change
+            changePasswordMenu();
         });
         viewFlashcardsMenu.setOnAction(e -> {
             try {
