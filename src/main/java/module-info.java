@@ -9,6 +9,7 @@ module com.ia.ia_base {
     opens com.ia.ia_base.controllers to javafx.fxml;
     opens com.ia.ia_base.controllers.teachers to javafx.fxml;
     opens com.ia.ia_base.controllers.students to javafx.fxml;
+    opens com.ia.ia_base.models to javafx.base;
     
     exports com.ia.ia_base;
     exports com.ia.ia_base.controllers;

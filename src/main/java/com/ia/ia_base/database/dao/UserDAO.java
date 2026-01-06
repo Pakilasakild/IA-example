@@ -46,8 +46,7 @@ public class UserDAO extends BaseDAO<User> {
 
     @Override
     protected User mapResultSetToEntity(ResultSet rs) throws SQLException {
-        // 1) Decide which subclass to create based on role_name
-        String roleName = rs.getString("role_name");  // from your SELECT alias
+        String roleName = rs.getString("role_name");
         User user;
 
         if ("teacher".equalsIgnoreCase(roleName)) {
@@ -55,22 +54,16 @@ public class UserDAO extends BaseDAO<User> {
         } else if ("student".equalsIgnoreCase(roleName)) {
             user = new StudentUser();
         } else {
-            // Fallback: if you ever add admin or others, handle here
-            // For now, you can either:
-            //  - throw, or
-            //  - default to StudentUser/TeacherUser
             throw new IllegalStateException("Unknown role_name in DB: " + roleName);
         }
 
-        // 2) Map common User fields
         user.setId(rs.getInt("id"));
         user.setEmail(rs.getString("email"));
         user.setPasswordHash(rs.getString("password_hash"));
         user.setBlocked(rs.getBoolean("is_blocked"));
         user.setMustChangePassword(rs.getBoolean("must_change_password"));
 
-        // 3) Map Role object
-        int roleId = rs.getInt("role_id");  // from alias in SELECT
+        int roleId = rs.getInt("role_id");
         if (roleId > 0) {
             Role role = new Role(roleId, roleName);
             user.setRole(role);

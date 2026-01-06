@@ -16,31 +16,29 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `users`
+-- Table structure for table `flashcards`
 --
 
-DROP TABLE IF EXISTS `users`;
+DROP TABLE IF EXISTS `flashcards`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `users` (
+CREATE TABLE `flashcards` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `email` varchar(255) NOT NULL,
-  `password_hash` varchar(255) NOT NULL,
-  `role_id` int NOT NULL,
-  `is_blocked` tinyint(1) DEFAULT '0',
-  `must_change_password` tinyint(1) DEFAULT '0',
+  `question` varchar(255) NOT NULL,
+  `answer` varchar(255) NOT NULL,
+  `active` tinyint DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `users`
+-- Dumping data for table `flashcards`
 --
 
-LOCK TABLES `users` WRITE;
-/*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (4,'v4k4@gymn.edu','$2a$10$jvTye6AJGXgsvyyE7beILeJMo8Um3/aWEWf290q2WrIZBK2nAhX72',2,0,0),(5,'d@gmail.com','$2a$10$yM2YNRBF72xWRZGjsOVvbuoFXJjNOkDdxGoZRke2IkJTDLCE74lNe',1,0,0),(6,'student@gmail.com','$2a$10$NcpR35Nt7xtAQp6n/BR/SuL.Yva2PznAZ0xJPlcCBYvKW1LMGXCaW',2,0,0),(7,'demo@demo.com','$2a$10$Nmto1PZGAwIMhobgXzplZ.Vkpb4QsYN5gA7S.mg7yPkbxkxWwr97y',1,0,0);
-/*!40000 ALTER TABLE `users` ENABLE KEYS */;
+LOCK TABLES `flashcards` WRITE;
+/*!40000 ALTER TABLE `flashcards` DISABLE KEYS */;
+INSERT INTO `flashcards` VALUES (1,'Discriminant formula','b^2-4ac',0);
+/*!40000 ALTER TABLE `flashcards` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
