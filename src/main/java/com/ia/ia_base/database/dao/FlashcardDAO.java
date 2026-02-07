@@ -31,8 +31,8 @@ public class FlashcardDAO extends BaseDAO<Flashcard> {
     }
 
     public int update(Flashcard entity) throws SQLException {
-        String sql = "UPDATE flashcards SET question = ?, SET answer = ?, SET active = ? WHERE id = ?";
-        return executeUpdate(sql, entity.getQuestion(), entity.getAnswer(), entity.getId());
+        String sql = "UPDATE flashcards SET question = ?, answer = ?, active = ? WHERE id = ?";
+        return executeUpdate(sql, entity.getQuestion(), entity.getAnswer(), entity.isActive(), entity.getId());
     }
 
     public int delete(int id) throws SQLException {
@@ -42,6 +42,9 @@ public class FlashcardDAO extends BaseDAO<Flashcard> {
 
     @Override
     protected Flashcard mapResultSetToEntity(ResultSet rs) throws SQLException {
-        return new Flashcard(rs.getString("question"), rs.getString("answer"));
+        Flashcard fc = new Flashcard(rs.getString("question"), rs.getString("answer"));
+        fc.setId(rs.getInt("id"));
+        fc.setActive(rs.getBoolean("active"));
+        return fc;
     }
 }
