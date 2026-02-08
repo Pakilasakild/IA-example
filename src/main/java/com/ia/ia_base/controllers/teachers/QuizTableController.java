@@ -188,11 +188,9 @@ public class QuizTableController extends BaseController {
             FXMLLoader loader = new FXMLLoader(fxml);
             Parent root = loader.load();
 
-            // if your edit controller exists and has setQuiz(Quiz), call it
-            Object controller = loader.getController();
-            try {
-                controller.getClass().getMethod("setQuiz", Quiz.class).invoke(controller, quiz);
-            } catch (Exception ignored) {}
+            EditQuizController controller = loader.getController();
+
+            controller.setQuiz(quiz);
 
             Stage stage = new Stage();
             stage.setTitle("Edit Quiz");
