@@ -5,6 +5,7 @@ import com.ia.ia_base.database.dao.FlashcardDAO;
 import com.ia.ia_base.models.Flashcard;
 import com.ia.ia_base.util.AlertManager;
 import com.ia.ia_base.util.FlashcardReloadBus;
+import com.ia.ia_base.util.InformationReloadBus;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -55,7 +56,7 @@ public class FlashcardTableController extends BaseController {
 
     public void reloadTable() {
         try {
-            List<Flashcard> flashcards = flashcardDAO.findAll();
+            List<Flashcard> flashcards = flashcardDAO.findAllWithTags();
 
             for (Flashcard fc : flashcards) {
                 attachActiveListener(fc);
@@ -174,8 +175,9 @@ public class FlashcardTableController extends BaseController {
         try {
             if(AlertManager.showConfirmation("Delete flashcard", "Are you sure you want to delete this flashcard?", "")){
                 flashcardDAO.delete(flashcard.getId());
-                flashcardsObs.remove(flashcard);  // refresh instantly
+                flashcardsObs.remove(flashcard);
                 flashTableTeach.refresh();
+                InformationReloadBus.requestReload();
             }
         } catch (SQLException e) {
             AlertManager.showError("Database Error",

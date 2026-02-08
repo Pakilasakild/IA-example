@@ -35,6 +35,12 @@
                   <MenuItem fx:id="deleteQuizMenu" mnemonicParsing="false" text="Delete Quiz" />
             </items>
           </Menu>
+            <Menu mnemonicParsing="false" text="Tags">
+               <items>
+                  <MenuItem fx:id="addTagMenu" mnemonicParsing="false" text="Add New Tag" />
+                  <MenuItem fx:id="deleteTagMenu" mnemonicParsing="false" text="Delete Tag" />
+               </items>
+            </Menu>
         </menus>
       </MenuBar>
    </top>

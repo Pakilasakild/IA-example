@@ -4,40 +4,58 @@ import com.ia.ia_base.models.Flashcard;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class FlashcardDAO extends BaseDAO<Flashcard> {
 
+    private final FlashcardTagDAO flashcardTagDAO = new FlashcardTagDAO();
+
+    /** Normal fetch (no tags) */
     public List<Flashcard> findAll() throws SQLException {
-        String sql = "SELECT * from flashcards";
-        return executeQuery(sql);
+        return executeQuery("SELECT * FROM flashcards");
+    }
+
+    /** Fetch flashcards AND load tag names into Flashcard.tags (for your TableView column) */
+    public List<Flashcard> findAllWithTags() throws SQLException {
+        List<Flashcard> cards = findAll();
+        for (Flashcard fc : cards) {
+            ArrayList<String> tagNames = new ArrayList<>(flashcardTagDAO.findTagNamesForFlashcard(fc.getId()));
+            fc.setTags(tagNames);
+        }
+        return cards;
     }
 
     public Flashcard findById(int id) throws SQLException {
-        String sql = "SELECT * FROM flashcards WHERE id = ?";
-        List<Flashcard> results = executeQuery(sql, id);
-        return results.isEmpty() ? null : results.getFirst();
+        List<Flashcard> res = executeQuery("SELECT * FROM flashcards WHERE id = ?", id);
+        Flashcard fc = res.isEmpty() ? null : res.getFirst();
+        if (fc != null) fc.setTags(new ArrayList<>(flashcardTagDAO.findTagNamesForFlashcard(fc.getId())));
+        return fc;
     }
 
     public Flashcard findByQuestion(String question) throws SQLException {
-        String sql = "SELECT * FROM flashcards WHERE question = ?";
-        List<Flashcard> results = executeQuery(sql, question);
-        return results.isEmpty() ? null : results.getFirst();
+        List<Flashcard> res = executeQuery("SELECT * FROM flashcards WHERE question = ?", question);
+        Flashcard fc = res.isEmpty() ? null : res.getFirst();
+        if (fc != null) fc.setTags(new ArrayList<>(flashcardTagDAO.findTagNamesForFlashcard(fc.getId())));
+        return fc;
     }
 
     public int create(Flashcard entity) throws SQLException {
-        String sql = "INSERT INTO flashcards (question, answer, active) VALUES (?, ?, ?)";
-        return executeUpdate(sql, entity.getQuestion(), entity.getAnswer(), entity.isActive());
+        return executeUpdate("INSERT INTO flashcards (question, answer, active) VALUES (?, ?, ?)",
+                entity.getQuestion(), entity.getAnswer(), entity.isActive());
     }
 
     public int update(Flashcard entity) throws SQLException {
-        String sql = "UPDATE flashcards SET question = ?, answer = ?, active = ? WHERE id = ?";
-        return executeUpdate(sql, entity.getQuestion(), entity.getAnswer(), entity.isActive(), entity.getId());
+        return executeUpdate("UPDATE flashcards SET question = ?, answer = ?, active = ? WHERE id = ?",
+                entity.getQuestion(), entity.getAnswer(), entity.isActive(), entity.getId());
+    }
+
+    public int updateActive(int id, boolean active) throws SQLException {
+        return executeUpdate("UPDATE flashcards SET active = ? WHERE id = ?", active, id);
     }
 
     public int delete(int id) throws SQLException {
-        String sql = "DELETE FROM flashcards WHERE id = ?";
-        return executeUpdate(sql, id);
+        return executeUpdate("DELETE FROM flashcards WHERE id = ?", id);
     }
 
     @Override

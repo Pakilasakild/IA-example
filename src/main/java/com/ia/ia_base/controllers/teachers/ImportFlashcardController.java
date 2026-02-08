@@ -5,6 +5,7 @@ import com.ia.ia_base.database.dao.FlashcardDAO;
 import com.ia.ia_base.models.Flashcard;
 import com.ia.ia_base.util.AlertManager;
 import com.ia.ia_base.util.FlashcardReloadBus;
+import com.ia.ia_base.util.InformationReloadBus;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -40,8 +41,6 @@ public class ImportFlashcardController extends BaseController {
     @Override
     public void initialize(java.net.URL location, java.util.ResourceBundle resources) {
         flashcardDAO = new FlashcardDAO();
-
-        // Preview table setup
         column1.setText("Question");
         column2.setText("Answer");
         column1.setCellValueFactory(new PropertyValueFactory<>("question"));
@@ -106,6 +105,7 @@ public class ImportFlashcardController extends BaseController {
                     "Inserted: " + inserted + (skipped > 0 ? ("\nSkipped: " + skipped) : ""));
 
             FlashcardReloadBus.requestReload();
+            InformationReloadBus.requestReload();
 
             closeWindow();
 

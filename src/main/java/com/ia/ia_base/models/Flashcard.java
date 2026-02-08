@@ -9,7 +9,7 @@ public class Flashcard {
     private int id;
     private String question;
     private String answer;
-    private ArrayList<String> tags;
+    private ArrayList<String> tags = new ArrayList<>();
     private BooleanProperty active = new SimpleBooleanProperty();
 
     public Flashcard() {

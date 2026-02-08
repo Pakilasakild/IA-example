@@ -5,6 +5,7 @@ import com.ia.ia_base.database.dao.FlashcardDAO;
 import com.ia.ia_base.models.Flashcard;
 import com.ia.ia_base.util.AlertManager;
 import com.ia.ia_base.util.FlashcardReloadBus;
+import com.ia.ia_base.util.InformationReloadBus;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -49,6 +50,7 @@ public class CreateFlashcardController extends BaseController {
                 flashcardDAO.create(flashcard);
 
                 FlashcardReloadBus.requestReload();
+                InformationReloadBus.requestReload();
 
                 AlertManager.showInfo("Success", "Successfully created flashcard.");
                 closeWindow();

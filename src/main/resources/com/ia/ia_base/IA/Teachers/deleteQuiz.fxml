@@ -8,7 +8,7 @@
 
 <AnchorPane fx:id="createFlashcard" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="250.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ia.ia_base.controllers.teachers.DeleteQuizController">
    <children>
-      <Text layoutX="40.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Delete quiz">
+      <Text layoutX="40.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Delete Quiz">
          <font>
             <Font name="System Bold" size="35.0" />
          </font>

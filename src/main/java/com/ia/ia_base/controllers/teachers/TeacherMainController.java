@@ -35,6 +35,10 @@ public class TeacherMainController extends BaseController {
     public MenuItem deleteQuizMenu;
     @FXML
     public MenuItem importFlashcardMenu;
+    @FXML
+    public MenuItem addTagMenu;
+    @FXML
+    public MenuItem deleteTagMenu;
 
     @Override
     public void initialize(java.net.URL location, java.util.ResourceBundle resources) {
@@ -87,6 +91,12 @@ public class TeacherMainController extends BaseController {
         });
         deleteQuizMenu.setOnAction(e -> {
             openNewWindow("/com/ia/ia_base/IA/Teachers/deleteQuiz.fxml", "Delete quiz");
+        });
+        addTagMenu.setOnAction(e -> {
+            openNewWindow("/com/ia/ia_base/IA/Teachers/createTag.fxml", "Create new tag");
+        });
+        deleteTagMenu.setOnAction(e -> {
+            openNewWindow("/com/ia/ia_base/IA/Teachers/deleteTag.fxml", "Delete tag");
         });
     }
 }
