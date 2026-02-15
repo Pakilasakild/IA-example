@@ -43,7 +43,7 @@ public class WelcomeController extends BaseController {
     }
 
     private void setupGreeting() {
-        String greet = "Welcome, " + SessionManager.getInstance().getCurrentUser().getEmail();
+        String greet = "Welcome, " + SessionManager.getInstance().getCurrentUser().getEmail().split("@", 2)[0];
         greetingText.setText(greet);
     }
 

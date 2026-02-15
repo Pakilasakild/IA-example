@@ -53,10 +53,8 @@ public class QuizTableController extends BaseController {
 
         reloadTablePreserveFilter();
 
-        // ✅ This is what makes it refresh after create/delete:
         QuizReloadBus.register(reloadHandler);
 
-        // avoid double-registration if user reopens this screen many times
         quizTreeTableView.sceneProperty().addListener((obs, oldScene, newScene) -> {
             if (newScene != null) {
                 newScene.getWindow().setOnHidden(e -> QuizReloadBus.unregister(reloadHandler));
@@ -130,7 +128,6 @@ public class QuizTableController extends BaseController {
 
         loadTags();
 
-        // reselect previous tag if still exists
         if (selected == null) {
             tagSelect.getSelectionModel().select(ALL_TAGS);
         } else {
@@ -161,7 +158,6 @@ public class QuizTableController extends BaseController {
                 quizzes = quizDAO.findAllByTagId(selectedTag.getId());
             }
 
-            // attach tags for display
             for (Quiz q : quizzes) {
                 List<Tag> tags = quizTagDAO.findTagsForQuiz(q.getId());
                 ArrayList<String> names = new ArrayList<>();

@@ -1,6 +1,20 @@
 .background {
-    -fx-background-color: rgb(45, 85, 85)
+    -fx-background-color: rgb(45, 85, 85);
 }
-.BTNcolor {
-    -fx-background-color: rgb(45, 68, 68)
+.BTNs {
+    -fx-background-color: rgb(45, 68, 68);
+    -fx-font-family: "Marlett";
+    -fx-font-size: 12px;
+}
+.factFlux {
+    -fx-font-family: "Impact";
+    -fx-font-size: 60px;
+}
+.logsignin {
+    -fx-font-family: "Marlett";
+    -fx-font-size: 40px;
+}
+.suggestedFields {
+    -fx-font-family: "Marlett";
+    -fx-font-size: 12px;
 }

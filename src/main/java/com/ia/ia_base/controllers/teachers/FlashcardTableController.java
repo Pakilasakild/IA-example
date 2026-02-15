@@ -38,7 +38,6 @@ public class FlashcardTableController extends BaseController {
 
     private FlashcardDAO flashcardDAO;
 
-    // One shared list for the table
     private final ObservableList<Flashcard> flashcardsObs = FXCollections.observableArrayList();
 
     @Override
@@ -70,10 +69,8 @@ public class FlashcardTableController extends BaseController {
     }
 
     private void setupColumns() {
-        // Must match getQuestion()
         questionsFlashColumn.setCellValueFactory(new PropertyValueFactory<>("question"));
 
-        // Tags (optional)
         tagsFlashColumn.setCellValueFactory(new PropertyValueFactory<>("tags"));
         tagsFlashColumn.setCellFactory(col -> new TableCell<>() {
             @Override
@@ -83,12 +80,10 @@ public class FlashcardTableController extends BaseController {
             }
         });
 
-        // Active checkbox
         activeFlashColumn.setCellValueFactory(cellData -> cellData.getValue().activeProperty());
         activeFlashColumn.setCellFactory(CheckBoxTableCell.forTableColumn(activeFlashColumn));
         activeFlashColumn.setEditable(true);
 
-        // Edit link (PASS FLASHCARD)
         editFlashColumn.setCellFactory(col -> new TableCell<>() {
             private final Hyperlink editLink = new Hyperlink("Edit");
             {
@@ -104,7 +99,6 @@ public class FlashcardTableController extends BaseController {
             }
         });
 
-        // Delete link (delete + refresh immediately)
         delFlashColumn.setCellFactory(col -> new TableCell<>() {
             private final Hyperlink deleteLink = new Hyperlink("Delete");
             {
@@ -146,13 +140,10 @@ public class FlashcardTableController extends BaseController {
             ));
             Parent root = loader.load();
 
-            // IMPORTANT: replace EditFlashcardsController with YOUR edit controller class name
             EditFlashcardController editCtrl = loader.getController();
 
-            // Pass the flashcard to edit window
             editCtrl.setFlashcard(flashcard);
 
-            // After saving/closing edit, refresh table (because question/answer are plain Strings)
             editCtrl.setOnSaved(() -> {
                 flashTableTeach.refresh();
                 reloadTable();

@@ -58,7 +58,6 @@ public class CreateQuizController extends BaseController {
         quizQuestionsListView.setItems(questionsObs);
         quizQuestionsListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
-        // display question text
         quizQuestionsListView.setCellFactory(lv -> new ListCell<>() {
             @Override
             protected void updateItem(Question item, boolean empty) {
@@ -82,7 +81,6 @@ public class CreateQuizController extends BaseController {
             questionsObs.setAll(questionDAO.findAll());
             tagsObs.setAll(tagDAO.findAll());
 
-            // failsafe: if no questions exist, quiz cannot be created
             if (questionsObs.isEmpty()) {
                 createQuizBTN.setDisable(true);
                 AlertManager.showError("No questions", "Create at least one question before creating a quiz.");
@@ -96,7 +94,6 @@ public class CreateQuizController extends BaseController {
     private void onCreateQuiz() {
         String name = (quizNameField.getText() == null) ? "" : quizNameField.getText().trim();
 
-        // ---- FAILSAFES ----
         if (name.isEmpty()) {
             AlertManager.showError("Invalid quiz name", "Please enter a quiz name.");
             return;
@@ -109,18 +106,15 @@ public class CreateQuizController extends BaseController {
         }
 
         try {
-            // optional: enforce unique name
             Quiz existing = quizDAO.findByName(name);
             if (existing != null) {
                 AlertManager.showError("Duplicate quiz name", "A quiz with this name already exists.");
                 return;
             }
 
-            // ---- CREATE QUIZ ----
             Quiz quiz = new Quiz(name);
             quizDAO.create(quiz);
 
-            // find created quiz id (since create() doesn’t return generated key)
             Quiz inserted = quizDAO.findByName(name);
             if (inserted == null) {
                 AlertManager.showError("Database Error", "Quiz was created but could not be reloaded (id missing).");
@@ -128,7 +122,6 @@ public class CreateQuizController extends BaseController {
             }
             int quizId = inserted.getId();
 
-            // ---- LINK QUESTIONS (keep display order, not selection order) ----
             Set<Integer> selectedQuestionIds = selectedQuestions.stream().map(Question::getId).collect(Collectors.toSet());
             List<Integer> orderedQuestionIds = questionsObs.stream()
                     .filter(q -> selectedQuestionIds.contains(q.getId()))
@@ -137,7 +130,6 @@ public class CreateQuizController extends BaseController {
 
             quizQuestionDAO.setQuestionsForQuiz(quizId, orderedQuestionIds);
 
-            // ---- LINK TAGS (0 tags is allowed) ----
             List<Integer> tagIds = tagsObs.stream()
                     .filter(t -> tagChecked.getOrDefault(t.getId(), new SimpleBooleanProperty(false)).get())
                     .map(Tag::getId)
@@ -147,7 +139,6 @@ public class CreateQuizController extends BaseController {
 
             AlertManager.showInfo("Success", "Quiz created successfully.");
 
-            // refresh quiz list + welcome quiz count (if WelcomeController listens to QuizReloadBus)
             QuizReloadBus.requestReload();
 
             closeWindow();
