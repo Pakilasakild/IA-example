@@ -5,6 +5,11 @@
     -fx-background-color: rgb(45, 68, 68);
     -fx-font-family: "Marlett";
     -fx-font-size: 12px;
+    -fx-text-fill: white;
+}
+.forgotPassword {
+    -fx-font-family: "Impact";
+    -fx-font-size: 40px;
 }
 .factFlux {
     -fx-font-family: "Impact";

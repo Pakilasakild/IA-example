@@ -9,7 +9,11 @@ import com.ia.ia_base.util.AlertManager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.stage.Stage;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -126,7 +130,26 @@ public class FlashcardController extends BaseController {
         if (chosen.isEmpty()) {
             AlertManager.showError("No flashcards selected", "Please select flashcards.");
         } else {
-            //TODO add functionality
+            try{
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/com/ia/ia_base/IA/Student/flashcardSession.fxml")
+            );
+            Parent root = loader.load();
+
+                FlashcardSessionController controller = loader.getController();
+            if (controller != null) {
+                controller.setFlashcards(chosen);
+            }
+
+            Stage sessionStage = new Stage();
+            sessionStage.setTitle("Flashcard Session");
+            sessionStage.setScene(new Scene(root));
+            sessionStage.show();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            AlertManager.showError("Unable to open flashcard session", "Could not open the flashcard session window.");
+        }
         }
     }
 }
