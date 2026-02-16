@@ -17,6 +17,7 @@ import javafx.stage.Stage;
 
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -24,20 +25,19 @@ public class FlashcardController extends BaseController {
 
     private final FlashcardDAO flashcardDAO = new FlashcardDAO();
     private final TagDAO tagDAO = new TagDAO();
+
     private final ObservableList<Flashcard> allFlashcards = FXCollections.observableArrayList();
     private final ObservableList<Flashcard> filteredFlashcards = FXCollections.observableArrayList();
     private final ObservableList<Tag> allTags = FXCollections.observableArrayList();
-    private final Tag ALL_TAG = new Tag("All");
-    @FXML
-    private Button startFlashcardSessionBTN;
-    @FXML
-    private ListView<Flashcard> flashcardListView;
-    @FXML
-    private ComboBox<Tag> tagSelect;
 
+    private final Tag ALL_TAG = new Tag("All");
     {
         ALL_TAG.setId(-1);
     }
+
+    @FXML private Button startFlashcardSessionBTN;
+    @FXML private ListView<Flashcard> flashcardListView;
+    @FXML private ComboBox<Tag> tagSelect;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -81,6 +81,7 @@ public class FlashcardController extends BaseController {
                 setText(empty || item == null ? null : item.getTagName());
             }
         });
+
         tagSelect.setButtonCell(new ListCell<>() {
             @Override
             protected void updateItem(Tag item, boolean empty) {
@@ -94,14 +95,24 @@ public class FlashcardController extends BaseController {
 
     private void loadInitialData() {
         try {
+            // Load tags
             allTags.clear();
             allTags.add(ALL_TAG);
             allTags.addAll(tagDAO.findAll());
             tagSelect.setItems(allTags);
             tagSelect.getSelectionModel().select(ALL_TAG);
 
+            // Load flashcards (ONLY ACTIVE)
             allFlashcards.clear();
-            allFlashcards.addAll(flashcardDAO.findAllWithTags());
+
+            List<Flashcard> fetched = flashcardDAO.findAllWithTags();
+            List<Flashcard> activeOnly = new ArrayList<>();
+            for (Flashcard fc : fetched) {
+                if (fc != null && fc.isActive()) {
+                    activeOnly.add(fc);
+                }
+            }
+            allFlashcards.addAll(activeOnly);
 
             filteredFlashcards.setAll(allFlashcards);
             flashcardListView.setItems(filteredFlashcards);
@@ -127,16 +138,19 @@ public class FlashcardController extends BaseController {
 
     private void startSession() {
         List<Flashcard> chosen = List.copyOf(flashcardListView.getSelectionModel().getSelectedItems());
+
         if (chosen.isEmpty()) {
             AlertManager.showError("No flashcards selected", "Please select flashcards.");
-        } else {
-            try{
+            return;
+        }
+
+        try {
             FXMLLoader loader = new FXMLLoader(
                     getClass().getResource("/com/ia/ia_base/IA/Student/flashcardSession.fxml")
             );
             Parent root = loader.load();
 
-                FlashcardSessionController controller = loader.getController();
+            FlashcardSessionController controller = loader.getController();
             if (controller != null) {
                 controller.setFlashcards(chosen);
             }
@@ -149,7 +163,6 @@ public class FlashcardController extends BaseController {
         } catch (Exception e) {
             e.printStackTrace();
             AlertManager.showError("Unable to open flashcard session", "Could not open the flashcard session window.");
-        }
         }
     }
 }

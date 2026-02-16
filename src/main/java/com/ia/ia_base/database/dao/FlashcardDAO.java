@@ -11,12 +11,10 @@ public class FlashcardDAO extends BaseDAO<Flashcard> {
 
     private final FlashcardTagDAO flashcardTagDAO = new FlashcardTagDAO();
 
-    /** Normal fetch (no tags) */
     public List<Flashcard> findAll() throws SQLException {
         return executeQuery("SELECT * FROM flashcards");
     }
 
-    /** Fetch flashcards AND load tag names into Flashcard.tags (for your TableView column) */
     public List<Flashcard> findAllWithTags() throws SQLException {
         List<Flashcard> cards = findAll();
         for (Flashcard fc : cards) {

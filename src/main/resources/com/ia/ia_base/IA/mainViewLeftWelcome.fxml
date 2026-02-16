@@ -4,19 +4,19 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="250.0" styleClass="background" stylesheets="@../styles/welcome.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ia.ia_base.controllers.WelcomeController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="515.0" prefWidth="260.0" styleClass="background" stylesheets="@../styles/login.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ia.ia_base.controllers.WelcomeController">
    <children>
-      <Text fx:id="greetingText" layoutX="14.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="biggerText" text="Welcome">
+      <Text fx:id="greetingText" fill="WHITE" layoutX="14.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="welcome" text="Welcome">
          <font>
             <Font size="24.0" />
          </font>
       </Text>
-      <Text fx:id="flashcardAmountText" layoutX="14.0" layoutY="117.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text" text="Amount of flashcards">
+      <Text fx:id="flashcardAmountText" fill="WHITE" layoutX="14.0" layoutY="117.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="numbers" text="Amount of flashcards">
          <font>
             <Font size="20.0" />
          </font>
       </Text>
-      <Text fx:id="quizAmountText" layoutX="14.0" layoutY="154.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text" text="Amount of quizzes">
+      <Text fx:id="quizAmountText" fill="WHITE" layoutX="14.0" layoutY="154.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="numbers" text="Amount of quizzes">
          <font>
             <Font size="20.0" />
          </font>

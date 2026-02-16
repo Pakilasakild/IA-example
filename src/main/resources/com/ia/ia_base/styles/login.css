@@ -7,6 +7,16 @@
     -fx-font-size: 12px;
     -fx-text-fill: white;
 }
+.welcome{
+    -fx-font-family: "Marlett";
+    -fx-font-size: 26px;
+    -fx-text-fill: white;
+}
+.numbers{
+    -fx-font-family: "Marlett";
+    -fx-font-size: 18px;
+    -fx-text-fill: white;
+}
 .forgotPassword {
     -fx-font-family: "Impact";
     -fx-font-size: 40px;

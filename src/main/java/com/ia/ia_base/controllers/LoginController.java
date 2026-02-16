@@ -114,8 +114,8 @@ public class LoginController extends BaseController {
                 if (stage != null) {
                     stage.setTitle("FactFlux");
                     stage.setResizable(true);
-                    stage.setWidth(1000);
-                    stage.setHeight(700);
+                    stage.setWidth(810);
+                    stage.setHeight(540);
                 }
             } else {
                 changeScene("IA/Teachers/TeacherViewMenu.fxml");
@@ -123,7 +123,7 @@ public class LoginController extends BaseController {
                     stage.setTitle("FactFlux, Teacher Environment");
                     stage.setResizable(true);
                     stage.setWidth(1000);
-                    stage.setHeight(700);
+                    stage.setHeight(540);
                 }
             }
 

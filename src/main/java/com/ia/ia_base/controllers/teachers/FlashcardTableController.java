@@ -12,10 +12,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Hyperlink;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
@@ -23,11 +20,17 @@ import javafx.stage.Stage;
 
 import java.net.URL;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class FlashcardTableController extends BaseController {
+
+    private static final String ALL_TAGS = "All";
+
+    private final ObservableList<Flashcard> flashcardsObs = FXCollections.observableArrayList();
+    private final ObservableList<String> tagOptions = FXCollections.observableArrayList();
+
+    // Holds the full list from DB; table shows a filtered view of this
+    private List<Flashcard> allFlashcards = new ArrayList<>();
 
     @FXML public TableView<Flashcard> flashTableTeach;
     @FXML public TableColumn<Flashcard, String> questionsFlashColumn;
@@ -36,36 +39,135 @@ public class FlashcardTableController extends BaseController {
     @FXML public TableColumn<Flashcard, Void> editFlashColumn;
     @FXML public TableColumn<Flashcard, Void> delFlashColumn;
 
-    private FlashcardDAO flashcardDAO;
+    @FXML public ComboBox<String> tagSelect;
 
-    private final ObservableList<Flashcard> flashcardsObs = FXCollections.observableArrayList();
+    private FlashcardDAO flashcardDAO;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         flashcardDAO = new FlashcardDAO();
 
         setupColumns();
+        setupTagFilter();
 
         flashTableTeach.setEditable(true); // REQUIRED for checkbox clicking
         flashTableTeach.setItems(flashcardsObs);
 
         reloadTable();
+
+        // remote refresh (create/edit/import etc.)
         FlashcardReloadBus.register(this::reloadTable);
+
+        // avoid duplicate listeners if the view is reopened many times
+        flashTableTeach.sceneProperty().addListener((obs, oldScene, newScene) -> {
+            if (newScene != null && newScene.getWindow() != null) {
+                newScene.getWindow().setOnHidden(e -> FlashcardReloadBus.unregister(this::reloadTable));
+            }
+        });
+    }
+
+    private void setupTagFilter() {
+        tagSelect.setItems(tagOptions);
+
+        // Nice display
+        tagSelect.setButtonCell(new ListCell<>() {
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                setText(empty || item == null ? ALL_TAGS : item);
+            }
+        });
+
+        tagSelect.setCellFactory(cb -> new ListCell<>() {
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                setText(empty || item == null ? null : item);
+            }
+        });
+
+        // When tag changes -> apply filter
+        tagSelect.valueProperty().addListener((obs, oldVal, newVal) -> applyTagFilter());
+
+        // default selection
+        if (tagSelect.getValue() == null) {
+            tagSelect.getSelectionModel().select(ALL_TAGS);
+        }
     }
 
     public void reloadTable() {
         try {
             List<Flashcard> flashcards = flashcardDAO.findAllWithTags();
 
+            // attach active listeners for persistence
             for (Flashcard fc : flashcards) {
                 attachActiveListener(fc);
             }
 
-            flashcardsObs.setAll(flashcards);
+            allFlashcards = flashcards;
+
+            // rebuild tag dropdown based on all cards
+            rebuildTagOptions(allFlashcards);
+
+            // apply filter to show in table
+            applyTagFilter();
+
         } catch (SQLException e) {
             AlertManager.showError("Database Error", "Failed to reload flashcards: " + e.getMessage());
             e.printStackTrace();
         }
+    }
+
+    private void rebuildTagOptions(List<Flashcard> flashcards) {
+        String previouslySelected = tagSelect.getValue();
+        if (previouslySelected == null || previouslySelected.isBlank()) {
+            previouslySelected = ALL_TAGS;
+        }
+
+        // unique sorted tag names
+        SortedSet<String> tags = new TreeSet<>(String.CASE_INSENSITIVE_ORDER);
+        for (Flashcard fc : flashcards) {
+            List<String> t = fc.getTags();
+            if (t == null) continue;
+            for (String name : t) {
+                if (name != null && !name.isBlank()) tags.add(name.trim());
+            }
+        }
+
+        tagOptions.clear();
+        tagOptions.add(ALL_TAGS);
+        tagOptions.addAll(tags);
+
+        // restore selection if possible
+        if (tagOptions.contains(previouslySelected)) {
+            tagSelect.getSelectionModel().select(previouslySelected);
+        } else {
+            tagSelect.getSelectionModel().select(ALL_TAGS);
+        }
+    }
+
+    private void applyTagFilter() {
+        String selected = tagSelect.getValue();
+        if (selected == null || selected.isBlank()) selected = ALL_TAGS;
+
+        if (ALL_TAGS.equalsIgnoreCase(selected)) {
+            flashcardsObs.setAll(allFlashcards);
+            return;
+        }
+
+        List<Flashcard> filtered = new ArrayList<>();
+        for (Flashcard fc : allFlashcards) {
+            List<String> tags = fc.getTags();
+            if (tags == null) continue;
+
+            for (String t : tags) {
+                if (t != null && t.equalsIgnoreCase(selected)) {
+                    filtered.add(fc);
+                    break;
+                }
+            }
+        }
+        flashcardsObs.setAll(filtered);
     }
 
     private void setupColumns() {
@@ -86,12 +188,14 @@ public class FlashcardTableController extends BaseController {
 
         editFlashColumn.setCellFactory(col -> new TableCell<>() {
             private final Hyperlink editLink = new Hyperlink("Edit");
+
             {
                 editLink.setOnAction(e -> {
                     Flashcard flashcard = getTableView().getItems().get(getIndex());
                     openEditWindow(flashcard);
                 });
             }
+
             @Override
             protected void updateItem(Void item, boolean empty) {
                 super.updateItem(item, empty);
@@ -101,12 +205,14 @@ public class FlashcardTableController extends BaseController {
 
         delFlashColumn.setCellFactory(col -> new TableCell<>() {
             private final Hyperlink deleteLink = new Hyperlink("Delete");
+
             {
                 deleteLink.setOnAction(e -> {
                     Flashcard flashcard = getTableView().getItems().get(getIndex());
                     onDelete(flashcard);
                 });
             }
+
             @Override
             protected void updateItem(Void item, boolean empty) {
                 super.updateItem(item, empty);
@@ -141,12 +247,11 @@ public class FlashcardTableController extends BaseController {
             Parent root = loader.load();
 
             EditFlashcardController editCtrl = loader.getController();
-
             editCtrl.setFlashcard(flashcard);
 
             editCtrl.setOnSaved(() -> {
+                reloadTable(); // <- keeps filter + tags updated too
                 flashTableTeach.refresh();
-                reloadTable();
             });
 
             Stage stage = new Stage();
@@ -164,10 +269,12 @@ public class FlashcardTableController extends BaseController {
 
     private void onDelete(Flashcard flashcard) {
         try {
-            if(AlertManager.showConfirmation("Delete flashcard", "Are you sure you want to delete this flashcard?", "")){
+            if (AlertManager.showConfirmation("Delete flashcard", "Are you sure you want to delete this flashcard?", "")) {
                 flashcardDAO.delete(flashcard.getId());
-                flashcardsObs.remove(flashcard);
-                flashTableTeach.refresh();
+
+                // reload to keep filter + tag list consistent
+                reloadTable();
+
                 InformationReloadBus.requestReload();
             }
         } catch (SQLException e) {
